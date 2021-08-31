@@ -15,5 +15,8 @@ public:
 	void createPicture(unsigned int, unsigned int, sf::Color);
 	sf::Image getImage() { return image_; };
 	void invertion();
+	void frame();
+	void show();
+	void tresholding();
 
 };
