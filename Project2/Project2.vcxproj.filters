@@ -21,9 +21,15 @@
     <ClCompile Include="image.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="effect.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="image.h">
+      <Filter>Pliki źródłowe</Filter>
+    </ClInclude>
+    <ClInclude Include="effect.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
   </ItemGroup>

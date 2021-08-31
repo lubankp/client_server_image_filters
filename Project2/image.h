@@ -14,5 +14,6 @@ public:
 	void writePicture(std::string);
 	void createPicture(unsigned int, unsigned int, sf::Color);
 	sf::Image getImage() { return image_; };
+	void invertion();
 
 };
