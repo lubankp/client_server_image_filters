@@ -39,10 +39,10 @@ void Picture::invertion(){
 
 void Picture::frame() {
 
-	std::cout << "Podaj wartosæ horyzontalna ramki: \n";
+	std::cout << "Podaj wartosc horyzontalna ramki: \n";
 	int horizontal;
 	std::cin >> horizontal;
-	std::cout << "Podaj wartosæ wertykalna ramki: \n";
+	std::cout << "Podaj wartosc wertykalna ramki: \n";
 	int vertical;
 	std::cin >> vertical;
 
@@ -94,10 +94,10 @@ void Picture::show() {
 
 void Picture::tresholding() {
 
-	std::cout << "Podaj kanal: \n";
+	std::cout << "Podaj kanal (r, g, b): \n";
 	char canal;
 	std::cin >> canal;
-	std::cout << "Podaj wartosæ tresholdu: \n";
+	std::cout << "Podaj wartosæ tresholdu (0 - 255): \n";
 	int value;
 	std::cin >> value;
 
