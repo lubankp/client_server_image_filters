@@ -1,22 +1,11 @@
 #pragma once
-#include <image.h>
-#include <SFML/Graphics.hpp>
+#include "image.h"
 
-enum effect_ {
-	invertion,
-	frame,
-	tresholding
-	};
-
-class Effect : Picture {
-
-	std::string imageName_;
-	std::string operation_;
+class Effect {
 
 public:
-
-	Picture init();
-	void chooseOperation(Picture);
-	std::string getImageName(){ return imageName_; };
-	std::string getOperation() { return operation_; };
+	Picture e_image_;
+	virtual void makeEffect() = 0;
+	virtual ~Effect() {};
 };
+

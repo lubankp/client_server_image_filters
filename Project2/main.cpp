@@ -1,13 +1,11 @@
-#include "yami.h"
-#include <iostream>
-#include "image.h"
-#include <SFML/Graphics.hpp>
-#include <effect.h>
+
+#include "comunication.cpp"
+
 
 int main() {
 
-	Effect effect;
-	Picture  picture = effect.init();
-	effect.chooseOperation(picture);
+	Comunication comunication;
+	Picture  picture = comunication.init();
+	comunication.chooseOperation(picture);
 	
 }

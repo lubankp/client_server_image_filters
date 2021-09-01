@@ -158,12 +158,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="effect.cpp" />
+    <ClCompile Include="comunication.cpp" />
+    <ClCompile Include="effect.h" />
+    <ClCompile Include="frame.cpp" />
     <ClCompile Include="image.cpp" />
+    <ClCompile Include="inversion.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="metodes.cpp" />
+    <ClCompile Include="treshold.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="effect.h" />
     <ClInclude Include="image.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
