@@ -97,7 +97,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\p.lubanski\source\repos\CPP Learning\Project2\SFML-2.5.1\include;C:\Users\p.lubanski\source\repos\CPP Learning2\Project2\yami4-cpp;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\p.lubanski\source\repos\CPP Learning2\Project2\SFML-2.5.1\include;C:\Users\p.lubanski\source\repos\CPP Learning2\Project2\yami4-cpp;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -130,7 +130,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);SFML_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\p.lubanski\source\repos\CPP Learning\Project2\SFML-2.5.1\include;C:\Users\p.lubanski\source\repos\CPP Learning2\Project2\yami4-cpp;C:\Users\p.lubanski\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\p.lubanski\source\repos\CPP Learning2\Project2\SFML-2.5.1\include;C:\Users\p.lubanski\source\repos\CPP Learning2\Project2\yami4-cpp;C:\Users\p.lubanski\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -7,7 +7,7 @@
 int main() {
 
 	Effect effect;
-	effect.init();
-	effect.chooseOperation();
+	Picture  picture = effect.init();
+	effect.chooseOperation(picture);
 	
 }

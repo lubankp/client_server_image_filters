@@ -1,9 +1,9 @@
 #include "image.h"
+#include <string>
 
-void Picture::openPicture(std::string fileName) {
+bool Picture::openPicture(std::string fileName) {
 
-	image_.loadFromFile(fileName);
-	
+	return	image_.loadFromFile(fileName);
 }
 
 void Picture::writePicture(std::string fileName) {
@@ -40,16 +40,53 @@ void Picture::invertion(){
 void Picture::frame() {
 
 	std::cout << "Podaj wartosc horyzontalna ramki: \n";
-	int horizontal;
-	std::cin >> horizontal;
+	std::string horizontal;
+	bool correct_value = 0;
+	int horizontal_int;
+	while (!correct_value)
+	{
+		try {
+			std::getline(std::cin, horizontal);
+			horizontal_int = std::stoi(horizontal);
+			if ((horizontal_int < image_.getSize().x) and (horizontal_int > 0)) {
+				correct_value = true;
+			}
+			else {
+				std::cout << "Podaj wartosc liczbowa z zakresu (0 - " << image_.getSize().x << ") :\n";
+			}
+		}
+		catch(std::invalid_argument e){
+			std::cout << "Podaj wartosc liczbowa: \n";
+		}
+
+			
+	}
+
 	std::cout << "Podaj wartosc wertykalna ramki: \n";
-	int vertical;
-	std::cin >> vertical;
+	std::string vertical;
+	bool correct_value1 = false;
+	int vertical_int;
+	while (!correct_value1)
+	{
+		try {
+			std::getline(std::cin, vertical);
+			vertical_int = std::stoi(vertical);
+			if ((vertical_int < image_.getSize().y) and (vertical_int > 0)) {
+				correct_value1 = true;
+			}
+			else {
+				std::cout << "Podaj wartosc liczbowa z zakresu (0 - " << image_.getSize().y << ") :\n";
+			}
+		}
+		catch (std::invalid_argument e) {
+			std::cout << "Podaj wartosc liczbowa: \n";
+		}
+	}
 
 	sf::Color white = sf::Color::White;
-	int horizontal_s = (image_.getSize().x - horizontal)/2;
+	int horizontal_s = (image_.getSize().x - horizontal_int)/2;
 	int horizontal_f = image_.getSize().x - horizontal_s;
-	int vertical_s = (image_.getSize().y - vertical) / 2;
+	int vertical_s = (image_.getSize().y - vertical_int) / 2;
 	int vertical_f = image_.getSize().y - vertical_s;
 
 
@@ -97,9 +134,39 @@ void Picture::tresholding() {
 	std::cout << "Podaj kanal (r, g, b): \n";
 	char canal;
 	std::cin >> canal;
-	std::cout << "Podaj wartosæ tresholdu (0 - 255): \n";
-	int value;
-	std::cin >> value;
+	
+	bool correct_canal = false;
+	while (!correct_canal) {
+		if (canal == 'r' or canal == 'g' or canal == 'b') {
+			correct_canal = true;
+		}
+		else {
+			std::cout << "Niewlasciwa nazwa kanalu, podaj (r, g, b): \n";
+			std::cin >> canal;
+		}
+	}
+
+	std::cout << "Podaj wartosc tresholdu (0 - 255): \n";
+	std::string value;
+	std::getline(std::cin, value);
+	bool correct_value2 = false;
+	int value_int;
+	while (!correct_value2)
+	{
+		try {
+			std::getline(std::cin, value);
+			value_int = std::stoi(value);
+			if ((value_int < 255) and (value_int > 0)) {
+				correct_value2 = true;
+			}
+			else {
+				std::cout << "Podaj wartosc liczbowa z zakresu (0 - 255) :\n";
+			}
+		}
+		catch (std::invalid_argument e) {
+			std::cout << "Podaj wartosc liczbowa: \n";
+		}
+	}
 
 	sf::Color color;
 
@@ -109,14 +176,14 @@ void Picture::tresholding() {
 
 
 			color = image_.getPixel(x, y);
-			if (image_.getPixel(x, y).r < value and canal == 'r') {
-				color.r = value;
+			if (image_.getPixel(x, y).r < value_int and canal == 'r') {
+				color.r = value_int;
 			}
-			if (image_.getPixel(x, y).g < value and canal == 'g') {
-				color.g = value;
+			if (image_.getPixel(x, y).g < value_int and canal == 'g') {
+				color.g = value_int;
 			}
-			if (image_.getPixel(x, y).b < value and canal == 'b') {
-				color.b = value;
+			if (image_.getPixel(x, y).b < value_int and canal == 'b') {
+				color.b = value_int;
 			}
 			image_.setPixel(x, y, color);
 			

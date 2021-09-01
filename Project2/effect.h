@@ -11,12 +11,12 @@ enum effect_ {
 class Effect : Picture {
 
 	std::string imageName_;
-	int operation_;
+	std::string operation_;
 
 public:
 
-	void init();
-	void chooseOperation();
+	Picture init();
+	void chooseOperation(Picture);
 	std::string getImageName(){ return imageName_; };
-	int getOperation() { return operation_; };
+	std::string getOperation() { return operation_; };
 };
