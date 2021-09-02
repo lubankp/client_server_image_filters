@@ -4,8 +4,7 @@
 class Effect {
 
 public:
-	Picture e_image_;
-	virtual void makeEffect() = 0;
+	virtual void makeEffect(Picture&) = 0;
 	virtual ~Effect() {};
 };
 

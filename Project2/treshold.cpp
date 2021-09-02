@@ -6,7 +6,7 @@ class Treshold : public Effect {
 
 
 public:
-	void makeEffect() override {
+	void makeEffect(Picture& e_image_) override {
 		
 		std::cout << "Podaj kanal (r, g, b): \n";
 		char canal;
@@ -47,26 +47,26 @@ public:
 
 		sf::Color color;
 
-		for (int x = 0; x < e_image_.getImage().getSize().x; x++) {
+		for (int x = 0; x < e_image_.getImage()->getSize().x; x++) {
 
-			for (int y = 0; y < e_image_.getImage().getSize().y; y++) {
+			for (int y = 0; y < e_image_.getImage()->getSize().y; y++) {
 
 
-				color = e_image_.getImage().getPixel(x, y);
-				if (e_image_.getImage().getPixel(x, y).r < value_int and canal == 'r') {
+				color = e_image_.getImage()->getPixel(x, y);
+				if (e_image_.getImage()->getPixel(x, y).r < value_int and canal == 'r') {
 					color.r = value_int;
 				}
-				if (e_image_.getImage().getPixel(x, y).g < value_int and canal == 'g') {
+				if (e_image_.getImage()->getPixel(x, y).g < value_int and canal == 'g') {
 					color.g = value_int;
 				}
-				if (e_image_.getImage().getPixel(x, y).b < value_int and canal == 'b') {
+				if (e_image_.getImage()->getPixel(x, y).b < value_int and canal == 'b') {
 					color.b = value_int;
 				}
-				e_image_.getImage().setPixel(x, y, color);
+				e_image_.getImage()->setPixel(x, y, color);
 
 			}
 		}
-
+		
 	}
 	~Treshold(){};
 };
