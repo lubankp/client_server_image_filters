@@ -3,6 +3,7 @@
 #include "inversion.cpp"
 #include "treshold.cpp"
 #include "frame.cpp"
+#include <vector>
 
 
 class Comunication {
@@ -31,52 +32,66 @@ public:
 	}
 
 
-	void chooseOperation(Picture picture) {
+	std::vector<std::shared_ptr<Effect>> chooseOperation(Picture picture) {
 
 		std::cout << "Wyberz operacje (1-inwersja, 2-biala_ramka, 3-tresholding_kanalu): \n";
 		std::getline(std::cin, operation_);
 
 		bool correct_oper = false;
+		std::vector<int> operation_vec;
+		std::vector<std::shared_ptr<Effect>> finish_vec;
 
-		while (!correct_oper) {
-			if (operation_ == "1" or operation_ == "2" or operation_ == "3") {
-				correct_oper = true;
+		while (!correct_oper){
+			for (auto element : operation_) {
+
+				switch (element) {
+				case '1': operation_vec.push_back(1);
+					break;
+				case '2': operation_vec.push_back(2);
+					break;
+				case '3':  operation_vec.push_back(3);
+					break;
+				}
 			}
-			else {
+
+			if (operation_vec.empty()) {
 				std::cout << "Niewlasciwa nazwa operacji, podaj (1, 2, 3): \n";
 				std::getline(std::cin, operation_);
 			}
+			else {
+				correct_oper = true;
+			}
 		}
-		auto choose = std::stoi(operation_);
-
-		switch (choose) {
-			case 1:
+		
+		for (auto element : operation_vec) {
+			switch (element) {
+				case 1:
 				{
 					std::shared_ptr<Effect> inversion = std::make_shared<Invertion>();
-					inversion->makeEffect(picture);
+					finish_vec.push_back(inversion);
 					break;
 				}
-			case 2:
+				case 2:
 				{
-					frameComunication(picture);
+					makeFrameComunication(picture);
 					std::shared_ptr<Effect> frame = std::make_shared<Frame>(horizontal_int, vertical_int);
-					frame->makeEffect(picture);
+					finish_vec.push_back(frame);
 					break;
 				}
-			case 3:
+				case 3:
 				{
-					tresholdComunication();
+					makeTresholdComunication();
 					std::shared_ptr<Effect> treshold = std::make_shared<Treshold>(canal, value_int);
-					treshold->makeEffect(picture);
+					finish_vec.push_back(treshold);
 					break;
 				}
+			}
 		}
-		picture.writePicture("C:/Users/p.lubanski/source/repos/CPP Learning2/Project2/obraz3.bmp");
-		picture.show();
 		
+		return finish_vec;
 	}
 
-	void frameComunication(Picture picture) {
+	void makeFrameComunication(Picture picture) {
 
 		std::cout << "Podaj wartosc horyzontalna ramki: \n";
 		std::string horizontal;
@@ -121,7 +136,7 @@ public:
 		}
 	}
 
-	void tresholdComunication() {
+	void makeTresholdComunication() {
 
 			std::cout << "Podaj kanal (r, g, b): \n";
 
@@ -140,7 +155,6 @@ public:
 
 			std::cout << "Podaj wartosc tresholdu (0 - 255): \n";
 			std::string value;
-			std::getline(std::cin, value);
 			bool correct_value2 = false;
 
 			while (!correct_value2)

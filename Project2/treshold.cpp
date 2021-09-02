@@ -17,7 +17,6 @@ public:
 	void makeEffect(Picture& e_image_) override {
 		sf::Color color;
 
-		std::cout << canal_ << "to";
 		for (int x = 0; x < e_image_.getImage()->getSize().x; x++) {
 
 			for (int y = 0; y < e_image_.getImage()->getSize().y; y++) {
