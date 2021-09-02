@@ -10,6 +10,10 @@ class Comunication {
 
 	std::string imageName_;
 	std::string operation_ = "";
+	int vertical_int;
+	int horizontal_int;
+	int value_int;
+	std::string canal;
 
 public:
 
@@ -48,101 +52,21 @@ public:
 		switch (choose) {
 			case 1:
 				{
-				std::shared_ptr<Effect> inversion = std::make_shared<Invertion>();
-				inversion->makeEffect(picture);
-				break;
+					std::shared_ptr<Effect> inversion = std::make_shared<Invertion>();
+					inversion->makeEffect(picture);
+					break;
 				}
 			case 2:
 				{
-					std::cout << "Podaj wartosc horyzontalna ramki: \n";
-					std::string horizontal;
-					bool correct_value = 0;
-					int horizontal_int;
-					while (!correct_value)
-					{
-						try {
-							std::getline(std::cin, horizontal);
-							horizontal_int = std::stoi(horizontal);
-							if ((horizontal_int < picture.getImage()->getSize().x) and (horizontal_int > 0)) {
-								correct_value = true;
-							}
-							else {
-								std::cout << "Podaj wartosc liczbowa z zakresu (0 - " << picture.getImage()->getSize().x << ") :\n";
-							}
-						}
-						catch (std::invalid_argument e) {
-							std::cout << "Podaj wartosc liczbowa: \n";
-						}
-					}
-
-					std::cout << "Podaj wartosc wertykalna ramki: \n";
-					std::string vertical;
-					bool correct_value1 = false;
-					int vertical_int;
-					while (!correct_value1)
-					{
-						try {
-							std::getline(std::cin, vertical);
-							vertical_int = std::stoi(vertical);
-							if ((vertical_int < picture.getImage()->getSize().y) and (vertical_int > 0)) {
-								correct_value1 = true;
-							}
-							else {
-								std::cout << "Podaj wartosc liczbowa z zakresu (0 - " << picture.getImage()->getSize().y << ") :\n";
-							}
-						}
-						catch (std::invalid_argument e) {
-							std::cout << "Podaj wartosc liczbowa: \n";
-						}
-					}
-
-					std::shared_ptr<Effect> frame = std::make_shared<Frame>();
-					*(frame->getHorizontal()) = horizontal_int;
-					*(frame->getVertical()) = vertical_int;
+					frameComunication(picture);
+					std::shared_ptr<Effect> frame = std::make_shared<Frame>(horizontal_int, vertical_int);
 					frame->makeEffect(picture);
 					break;
 				}
 			case 3:
 				{
-					std::cout << "Podaj kanal (r, g, b): \n";
-					char canal;
-					std::cin >> canal;
-
-					bool correct_canal = false;
-					while (!correct_canal) {
-						if (canal == 'r' or canal == 'g' or canal == 'b') {
-							correct_canal = true;
-						}
-						else {
-							std::cout << "Niewlasciwa nazwa kanalu, podaj (r, g, b): \n";
-							std::cin >> canal;
-						}
-					}
-
-					std::cout << "Podaj wartosc tresholdu (0 - 255): \n";
-					std::string value;
-					std::getline(std::cin, value);
-					bool correct_value2 = false;
-					int value_int;
-					while (!correct_value2)
-					{
-						try {
-							std::getline(std::cin, value);
-							value_int = std::stoi(value);
-							if ((value_int < 255) and (value_int > 0)) {
-								correct_value2 = true;
-							}
-							else {
-								std::cout << "Podaj wartosc liczbowa z zakresu (0 - 255) :\n";
-							}
-						}
-						catch (std::invalid_argument e) {
-							std::cout << "Podaj wartosc liczbowa: \n";
-						}
-					}
-					std::shared_ptr<Effect> treshold = std::make_shared<Treshold>();
-					*(treshold->getTreshold()) = value_int;
-					*(treshold->getCanal()) = canal;
+					tresholdComunication();
+					std::shared_ptr<Effect> treshold = std::make_shared<Treshold>(canal, value_int);
 					treshold->makeEffect(picture);
 					break;
 				}
@@ -152,4 +76,89 @@ public:
 		
 	}
 
+	void frameComunication(Picture picture) {
+
+		std::cout << "Podaj wartosc horyzontalna ramki: \n";
+		std::string horizontal;
+		bool correct_value = 0;
+
+		while (!correct_value)
+		{
+			try {
+				std::getline(std::cin, horizontal);
+				horizontal_int = std::stoi(horizontal);
+				if ((horizontal_int < picture.getImage()->getSize().x) and (horizontal_int > 0)) {
+					correct_value = true;
+				}
+				else {
+					std::cout << "Podaj wartosc liczbowa z zakresu (0 - " << picture.getImage()->getSize().x << ") :\n";
+				}
+			}
+			catch (std::invalid_argument e) {
+				std::cout << "Podaj wartosc liczbowa: \n";
+			}
+		}
+
+		std::cout << "Podaj wartosc wertykalna ramki: \n";
+		std::string vertical;
+		bool correct_value1 = false;
+
+		while (!correct_value1)
+		{
+			try {
+				std::getline(std::cin, vertical);
+				vertical_int = std::stoi(vertical);
+				if ((vertical_int < picture.getImage()->getSize().y) and (vertical_int > 0)) {
+					correct_value1 = true;
+				}
+				else {
+					std::cout << "Podaj wartosc liczbowa z zakresu (0 - " << picture.getImage()->getSize().y << ") :\n";
+				}
+			}
+			catch (std::invalid_argument e) {
+				std::cout << "Podaj wartosc liczbowa: \n";
+			}
+		}
+	}
+
+	void tresholdComunication() {
+
+			std::cout << "Podaj kanal (r, g, b): \n";
+
+			std::getline(std::cin, canal);
+
+			bool correct_canal = false;
+			while (!correct_canal) {
+				if (canal == "r" or canal == "g" or canal == "b") {
+					correct_canal = true;
+				}
+				else {
+					std::cout << "Niewlasciwa nazwa kanalu, podaj (r, g, b): \n";
+					std::cin >> canal;
+				}
+			}
+
+			std::cout << "Podaj wartosc tresholdu (0 - 255): \n";
+			std::string value;
+			std::getline(std::cin, value);
+			bool correct_value2 = false;
+
+			while (!correct_value2)
+			{
+				try {
+					std::getline(std::cin, value);
+					value_int = std::stoi(value);
+					if ((value_int < 255) and (value_int > 0)) {
+						correct_value2 = true;
+					}
+					else {
+						std::cout << "Podaj wartosc liczbowa z zakresu (0 - 255) :\n";
+					}
+				}
+				catch (std::invalid_argument e) {
+					std::cout << "Podaj wartosc liczbowa: \n";
+				}
+			}
+	}
+	
 };
