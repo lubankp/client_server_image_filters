@@ -1,8 +1,8 @@
 #include "yami.h"
 #include <memory>
-#include "inversion.cpp"
-#include "treshold.cpp"
-#include "frame.cpp"
+#include "inversion.h"
+#include "treshold.h"
+#include "frame.h"
 #include <vector>
 
 
@@ -18,30 +18,35 @@ class Comunication {
 
 public:
 
-	Picture init() {
 
+	std::string init() {
 		std::cout << "Wyberz obraz: \n";
 		std::cin >> imageName_;
+		return imageName_;
+	}
+
+	Picture open(std::string& imageName) {
+
 		Picture picture;
 
-		while (!picture.openPicture("C:/Users/p.lubanski/source/repos/CPP Learning2/Project2/" + imageName_)) {
+		while (!picture.openPicture("C:/Users/p.lubanski/source/repos/CPP Learning2/Project2/" + imageName)) {
 			std::cout << "Niewlasciwa nazwa pliku, podaj inna: \n";
-			std::cin >> imageName_;
+			std::cin >> imageName;
 		}
 		return picture;
 	}
 
 
-	std::vector<std::shared_ptr<Effect>> chooseOperation(Picture picture) {
+	std::vector<int> createOperationVec() {
 
 		std::cout << "Wyberz operacje (1-inwersja, 2-biala_ramka, 3-tresholding_kanalu): \n";
 		std::getline(std::cin, operation_);
 
 		bool correct_oper = false;
 		std::vector<int> operation_vec;
-		std::vector<std::shared_ptr<Effect>> finish_vec;
+		
 
-		while (!correct_oper){
+		while (!correct_oper) {
 			for (auto element : operation_) {
 
 				switch (element) {
@@ -62,12 +67,17 @@ public:
 				correct_oper = true;
 			}
 		}
-		
+		return operation_vec;
+	}
+	std::vector<std::shared_ptr<Effect>> chooseOperation(Picture picture, std::vector<int> operation_vec) {
+
+		std::vector<std::shared_ptr<Effect>> finish_vec;
+
 		for (auto element : operation_vec) {
 			switch (element) {
 				case 1:
 				{
-					std::shared_ptr<Effect> inversion = std::make_shared<Invertion>();
+					std::shared_ptr<Effect> inversion = std::make_shared<Inversion>();
 					finish_vec.push_back(inversion);
 					break;
 				}

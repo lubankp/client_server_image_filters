@@ -1,7 +1,7 @@
 
 #include "effect.h"
 
-class Invertion : public Effect {
+class Inversion : public Effect {
 
 public:
 	void makeEffect(Picture& e_image_) override {
@@ -21,5 +21,5 @@ public:
 			}
 		}
 	}
-	~Invertion(){};
+	~Inversion(){};
 };

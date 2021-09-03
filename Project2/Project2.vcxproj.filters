@@ -18,28 +18,22 @@
     <ClCompile Include="main.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="image.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="effect.h">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="metodes.cpp">
+    <ClCompile Include="inversion.h">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="inversion.cpp">
+    <ClCompile Include="frame.h">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="frame.cpp">
+    <ClCompile Include="treshold.h">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="treshold.cpp">
+    <ClCompile Include="comunication.h">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="comunication.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="execute.cpp">
+    <ClCompile Include="execute.h">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>
