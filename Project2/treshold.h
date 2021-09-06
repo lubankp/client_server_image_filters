@@ -4,14 +4,14 @@
 
 class Treshold : public Effect {
 
-	std::string canal_;
+	int canal_;
 	int treshold_;
 
 public:
 
-	Treshold(std::string canal, int treshold) : canal_(canal), treshold_(treshold) {};
+	Treshold(int canal, int treshold) : canal_(canal), treshold_(treshold) {};
 
-	std::string* getCanal() { return &canal_; };
+	int* getCanal() { return &canal_; };
 	int* getTreshold() { return &treshold_; };
 
 	void makeEffect(Picture& e_image_) override {
@@ -23,13 +23,13 @@ public:
 
 
 				color = e_image_.getImage()->getPixel(x, y);
-				if (e_image_.getImage()->getPixel(x, y).r < treshold_ and canal_ == "r") {
+				if (e_image_.getImage()->getPixel(x, y).r < treshold_ and canal_ == 114) {
 					color.r = treshold_;
 				}
-				if (e_image_.getImage()->getPixel(x, y).g < treshold_ and canal_ == "g") {
+				if (e_image_.getImage()->getPixel(x, y).g < treshold_ and canal_ == 103) {
 					color.g = treshold_;
 				}
-				if (e_image_.getImage()->getPixel(x, y).b < treshold_ and canal_ == "b") {
+				if (e_image_.getImage()->getPixel(x, y).b < treshold_ and canal_ == 98) {
 					color.b = treshold_;
 				}
 				e_image_.getImage()->setPixel(x, y, color);

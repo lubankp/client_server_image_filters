@@ -4,6 +4,7 @@
 #include "treshold.h"
 #include "frame.h"
 #include <vector>
+#include <array>
 
 
 class Comunication {
@@ -13,8 +14,8 @@ class Comunication {
 	std::string operation_ = "";
 	int vertical_int;
 	int horizontal_int;
-	int value_int;
-	std::string canal;
+	int value_int_;
+	int canal_;
 
 public:
 
@@ -37,44 +38,69 @@ public:
 	}
 
 
-	std::vector<int> createOperationVec() {
-
-		std::cout << "Wyberz operacje (1-inwersja, 2-biala_ramka, 3-tresholding_kanalu): \n";
-		std::getline(std::cin, operation_);
+	std::vector <std::array<int,3>> createOperationVec(Picture picture ) {
 
 		bool correct_oper = false;
-		std::vector<int> operation_vec;
-		
-
+		std::vector<std::array<int,3>> operation_vec;
+		std::cout << "Wyberz operacje (1-inwersja, 2-biala_ramka, 3-tresholding_kanalu, 0-koniec wprowadzania): \n";
 		while (!correct_oper) {
-			for (auto element : operation_) {
 
-				switch (element) {
-				case '1': operation_vec.push_back(1);
-					break;
-				case '2': operation_vec.push_back(2);
-					break;
-				case '3':  operation_vec.push_back(3);
-					break;
+			int num = 0;
+			
+			std::getline(std::cin, operation_);
+			try {
+				int operation_num = std::stoi(operation_);
+				switch (operation_num) {
+					case 1:
+					{
+						std::array<int, 3> tab = { 1, 0, 0 };
+						operation_vec.push_back(tab);
+						num++;
+						break;
+					}
+					case 2:
+					{
+						makeFrameComunication(picture);
+						std::array<int, 3> tab1 = { 2, horizontal_int, vertical_int };
+						operation_vec.push_back(tab1);
+						num++;
+						break;
+					}
+					case 3:
+					{
+						makeTresholdComunication();
+						std::array<int, 3> tab2= { 3, canal_, value_int_ };
+						std::cout << canal_ << '\n';
+						operation_vec.push_back(tab2);
+						num++;
+						break;
+					}
+					case 0:
+					{
+						correct_oper = true;
+						break;
+					}
+					default:
+					{
+						std::cout << "Niewlasciwa nazwa operacji, podaj (1, 2, 3): \n";
+					}
 				}
 			}
-
-			if (operation_vec.empty()) {
+			catch(std::invalid_argument e)
+			{
 				std::cout << "Niewlasciwa nazwa operacji, podaj (1, 2, 3): \n";
-				std::getline(std::cin, operation_);
 			}
-			else {
-				correct_oper = true;
-			}
+			
 		}
 		return operation_vec;
 	}
-	std::vector<std::shared_ptr<Effect>> chooseOperation(Picture picture, std::vector<int> operation_vec) {
+
+	std::vector<std::shared_ptr<Effect>> chooseOperation(std::vector<std::array<int,3>> operation_vec) {
 
 		std::vector<std::shared_ptr<Effect>> finish_vec;
-
+		;
 		for (auto element : operation_vec) {
-			switch (element) {
+			switch (element[0]) {
 				case 1:
 				{
 					std::shared_ptr<Effect> inversion = std::make_shared<Inversion>();
@@ -83,21 +109,18 @@ public:
 				}
 				case 2:
 				{
-					makeFrameComunication(picture);
-					std::shared_ptr<Effect> frame = std::make_shared<Frame>(horizontal_int, vertical_int);
+					std::shared_ptr<Effect> frame = std::make_shared<Frame>(element[1], element[2]);
 					finish_vec.push_back(frame);
 					break;
 				}
 				case 3:
 				{
-					makeTresholdComunication();
-					std::shared_ptr<Effect> treshold = std::make_shared<Treshold>(canal, value_int);
+					std::shared_ptr<Effect> treshold = std::make_shared<Treshold>(element[1], element[2]);
 					finish_vec.push_back(treshold);
 					break;
 				}
 			}
-		}
-		
+		}	
 		return finish_vec;
 	}
 
@@ -149,20 +172,20 @@ public:
 	void makeTresholdComunication() {
 
 			std::cout << "Podaj kanal (r, g, b): \n";
-
-			std::getline(std::cin, canal);
-
+			std::string canal_value;
+			std::getline(std::cin, canal_value);
+			
 			bool correct_canal = false;
 			while (!correct_canal) {
-				if (canal == "r" or canal == "g" or canal == "b") {
+				if (canal_value == "r" or canal_value == "g" or canal_value == "b") {
 					correct_canal = true;
 				}
 				else {
 					std::cout << "Niewlasciwa nazwa kanalu, podaj (r, g, b): \n";
-					std::cin >> canal;
+					std::cin >> canal_value;
 				}
 			}
-
+			canal_ = (int)canal_value[0];
 			std::cout << "Podaj wartosc tresholdu (0 - 255): \n";
 			std::string value;
 			bool correct_value2 = false;
@@ -171,8 +194,8 @@ public:
 			{
 				try {
 					std::getline(std::cin, value);
-					value_int = std::stoi(value);
-					if ((value_int < 255) and (value_int > 0)) {
+					value_int_ = std::stoi(value);
+					if ((value_int_ < 255) and (value_int_ > 0)) {
 						correct_value2 = true;
 					}
 					else {

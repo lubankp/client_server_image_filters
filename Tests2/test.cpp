@@ -36,28 +36,29 @@ SCENARIO("File is loaded correctly", "file") {
         }
     }
 }
-/*
+
 SCENARIO("If operation vector is created correctly", "create_vector") {
 
     GIVEN("Load vector ") {
        
-        std::vector<int> vec = { 1, 2, 3, 1, 2, 3 };
+        std::vector<std::array<int, 3>> operation_vector = {{1, 0, 0}};
+        std::vector<std::shared_ptr<Effect>> finish_vect;
         Comunication comunication;
-        
 
         WHEN("chooseOperation function is called") {
           
-            std::vector<std::shared_ptr<Effect>> finish_vec;
-            finish_vec = comunication.chooseOperation(picture, operation_vector);
+            finish_vect = comunication.chooseOperation(operation_vector);
 
-            THEN("Images are identical") {
+            THEN("Vectors are identical") {
                
-                
+                std::shared_ptr<Inversion> inversion;
+                auto vector = finish_vect[0];
+                REQUIRE(vector == inversion);
             }
         }
     }
 }
-*/
+
 
 
 
@@ -138,9 +139,9 @@ SCENARIO("Red canal is tresholded correctly", "treshold red") {
         Picture picture = comunication.open(file_name);
         sf::Image* result = picture.getImage();
 
-        WHEN("Treshold function is called with parameters: canal = r, treshold = 100") {
+        WHEN("Treshold function is called with parameters: canal = r (114), treshold = 100") {
 
-            std::shared_ptr<Effect> treshold = std::make_shared<Treshold>("r",100);
+            std::shared_ptr<Effect> treshold = std::make_shared<Treshold>(114,100);
             treshold->makeEffect(picture);
 
             THEN("Images are identical") {
@@ -171,9 +172,9 @@ SCENARIO("Green canal is tresholded correctly", "treshold green") {
         Picture picture = comunication.open(file_name);
         sf::Image* result = picture.getImage();
 
-        WHEN("Treshold function is called with parameters: canal = g, treshold = 100") {
+        WHEN("Treshold function is called with parameters: canal = g (103), treshold = 100") {
 
-            std::shared_ptr<Effect> treshold = std::make_shared<Treshold>("g", 100);
+            std::shared_ptr<Effect> treshold = std::make_shared<Treshold>(103, 100);
             treshold->makeEffect(picture);
 
             THEN("Images are identical") {
@@ -204,9 +205,9 @@ SCENARIO("Blue canal is tresholded correctly", "treshold green") {
         Picture picture = comunication.open(file_name);
         sf::Image* result = picture.getImage();
 
-        WHEN("Treshold function is called with parameters: canal = b, treshold = 100") {
+        WHEN("Treshold function is called with parameters: canal = b (98), treshold = 100") {
 
-            std::shared_ptr<Effect> treshold = std::make_shared<Treshold>("b", 100);
+            std::shared_ptr<Effect> treshold = std::make_shared<Treshold>(98, 100);
             treshold->makeEffect(picture);
 
             THEN("Images are identical") {
