@@ -5,14 +5,14 @@
 #include "catchmain.h"
 #include "comunication.h"
 #include "execute.h"
-#include <SFML/Graphics.hpp>
+
 
 
 SCENARIO("File is loaded correctly", "file") {
     
     GIVEN("Loaded images ") {
-        sf::Image image;
-        image.loadFromFile("C:/Users/p.lubanski/Source/Repos/CPP Learning2/Project2/obraz1.bmp");
+        cv::Mat image;
+        image = cv::imread("C:/Users/p.lubanski/Source/Repos/CPP Learning2/Project2/obraz1.bmp", cv::IMREAD_COLOR);
         Comunication comunication;
 
         WHEN("Init function is called") {
@@ -20,14 +20,14 @@ SCENARIO("File is loaded correctly", "file") {
             Picture picture = comunication.open(file_name);
             
             THEN("Images are identical") {
-                sf::Image* result = picture.getImage();
+                cv::Mat* result = picture.getImage();
 
-                for (int x = 0; x < picture.getImage()->getSize().x; x++) {
+                for (int x = 0; x < picture.getSizeX(); x++) {
 
-                    for (int y = 0; y < picture.getImage()->getSize().y; y++) {
+                    for (int y = 0; y < picture.getSizeY(); y++) {
 
-                        sf::Color expected_pixel = image.getPixel(x, y);
-                        sf::Color pixel = result->getPixel(x, y);
+                        auto expected_pixel = image.at<cv::Vec3b>(y, x);
+                        auto pixel = result->at<cv::Vec3b>(y, x);
 
                         REQUIRE(expected_pixel == pixel);
                     }
@@ -37,41 +37,17 @@ SCENARIO("File is loaded correctly", "file") {
     }
 }
 
-SCENARIO("If operation vector is created correctly", "create_vector") {
-
-    GIVEN("Load vector ") {
-       
-        std::vector<std::array<int, 3>> operation_vector = {{1, 0, 0}};
-        std::vector<std::shared_ptr<Effect>> finish_vect;
-        Comunication comunication;
-
-        WHEN("chooseOperation function is called") {
-          
-            finish_vect = comunication.chooseOperation(operation_vector);
-
-            THEN("Vectors are identical") {
-               
-                std::shared_ptr<Inversion> inversion;
-                auto vector = finish_vect[0];
-                REQUIRE(vector == inversion);
-            }
-        }
-    }
-}
-
-
-
 
 SCENARIO("Image is inverted correctly", "inversion") {
 
     GIVEN("Loaded images ") {
-        sf::Image image;
-        image.loadFromFile("C:/Users/p.lubanski/Source/Repos/CPP Learning2/Project2/obraz2.bmp");
+        cv::Mat image;
+        image = cv::imread("C:/Users/p.lubanski/Source/Repos/CPP Learning2/Project2/obraz2.bmp", cv::IMREAD_COLOR);
 
         Comunication comunication;
         std::string file_name = "obraz1.bmp";
         Picture picture = comunication.open(file_name);
-        sf::Image* result = picture.getImage();
+        cv::Mat* result = picture.getImage();
 
         WHEN("Invertion function is called") {
 
@@ -80,12 +56,12 @@ SCENARIO("Image is inverted correctly", "inversion") {
 
             THEN("Images are identical") {
 
-                for (int x = 0; x < picture.getImage()->getSize().x; x++) {
+                for (int x = 0; x < picture.getSizeX(); x++) {
 
-                    for (int y = 0; y < picture.getImage()->getSize().y; y++) {
+                    for (int y = 0; y < picture.getSizeY(); y++) {
 
-                        sf::Color expected_pixel = image.getPixel(x, y);
-                        sf::Color pixel = result->getPixel(x, y);
+                        auto expected_pixel = image.at<cv::Vec3b>(y, x);
+                        auto pixel = result->at<cv::Vec3b>(y, x);
 
                         REQUIRE(expected_pixel == pixel);
                     }
@@ -98,27 +74,28 @@ SCENARIO("Image is inverted correctly", "inversion") {
 SCENARIO("Frame is printed correctly", "treshold red") {
 
     GIVEN("Loaded images ") {
-        sf::Image image;
-        image.loadFromFile("C:/Users/p.lubanski/Source/Repos/CPP Learning2/Project2/obraz3.bmp");
+        cv::Mat image;
+        image = cv::imread("C:/Users/p.lubanski/Source/Repos/CPP Learning2/Project2/obraz3.bmp", cv::IMREAD_COLOR);
 
         Comunication comunication;
         std::string file_name = "obraz1.bmp";
         Picture picture = comunication.open(file_name);
-        sf::Image* result = picture.getImage();
+        cv::Mat* result = picture.getImage();
 
         WHEN("TFrame function is called with parameters: horizontal = 100, vertical = 100") {
 
             std::shared_ptr<Effect> frame = std::make_shared<Frame>(100, 100);
             frame->makeEffect(picture);
 
+
             THEN("Images are identical") {
 
-                for (int x = 0; x < picture.getImage()->getSize().x; x++) {
+                for (int x = 0; x < picture.getSizeX(); x++) {
 
-                    for (int y = 0; y < picture.getImage()->getSize().y; y++) {
+                    for (int y = 0; y < picture.getSizeY(); y++) {
 
-                        sf::Color expected_pixel = image.getPixel(x, y);
-                        sf::Color pixel = result->getPixel(x, y);
+                        auto expected_pixel = image.at<cv::Vec3b>(y, x);
+                        auto pixel = result->at<cv::Vec3b>(y, x);
 
                         REQUIRE(expected_pixel == pixel);
                     }
@@ -131,13 +108,13 @@ SCENARIO("Frame is printed correctly", "treshold red") {
 SCENARIO("Red canal is tresholded correctly", "treshold red") {
 
     GIVEN("Loaded images ") {
-        sf::Image image;
-        image.loadFromFile("C:/Users/p.lubanski/Source/Repos/CPP Learning2/Project2/obraz4.bmp");
+        cv::Mat image;
+        image = cv::imread("C:/Users/p.lubanski/Source/Repos/CPP Learning2/Project2/obraz4.bmp", cv::IMREAD_COLOR);
 
         Comunication comunication;
         std::string file_name = "obraz1.bmp";
         Picture picture = comunication.open(file_name);
-        sf::Image* result = picture.getImage();
+        cv::Mat* result = picture.getImage();
 
         WHEN("Treshold function is called with parameters: canal = r (114), treshold = 100") {
 
@@ -146,12 +123,12 @@ SCENARIO("Red canal is tresholded correctly", "treshold red") {
 
             THEN("Images are identical") {
 
-                for (int x = 0; x < picture.getImage()->getSize().x; x++) {
+                for (int x = 0; x < picture.getSizeX(); x++) {
 
-                    for (int y = 0; y < picture.getImage()->getSize().y; y++) {
+                    for (int y = 0; y < picture.getSizeY(); y++) {
 
-                        sf::Color expected_pixel = image.getPixel(x, y);
-                        sf::Color pixel = result->getPixel(x, y);
+                        auto expected_pixel = image.at<cv::Vec3b>(y, x);
+                        auto pixel = result->at<cv::Vec3b>(y, x);
 
                         REQUIRE(expected_pixel == pixel);
                     }
@@ -164,13 +141,13 @@ SCENARIO("Red canal is tresholded correctly", "treshold red") {
 SCENARIO("Green canal is tresholded correctly", "treshold green") {
 
     GIVEN("Loaded images ") {
-        sf::Image image;
-        image.loadFromFile("C:/Users/p.lubanski/Source/Repos/CPP Learning2/Project2/obraz5.bmp");
+        cv::Mat image;
+        image = cv::imread("C:/Users/p.lubanski/Source/Repos/CPP Learning2/Project2/obraz5.bmp", cv::IMREAD_COLOR);
 
         Comunication comunication;
         std::string file_name = "obraz1.bmp";
         Picture picture = comunication.open(file_name);
-        sf::Image* result = picture.getImage();
+        cv::Mat* result = picture.getImage();
 
         WHEN("Treshold function is called with parameters: canal = g (103), treshold = 100") {
 
@@ -179,12 +156,12 @@ SCENARIO("Green canal is tresholded correctly", "treshold green") {
 
             THEN("Images are identical") {
 
-                for (int x = 0; x < picture.getImage()->getSize().x; x++) {
+                for (int x = 0; x < picture.getSizeX(); x++) {
 
-                    for (int y = 0; y < picture.getImage()->getSize().y; y++) {
+                    for (int y = 0; y < picture.getSizeY(); y++) {
 
-                        sf::Color expected_pixel = image.getPixel(x, y);
-                        sf::Color pixel = result->getPixel(x, y);
+                        auto expected_pixel = image.at<cv::Vec3b>(y, x);
+                        auto pixel = result->at<cv::Vec3b>(y, x);
 
                         REQUIRE(expected_pixel == pixel);
                     }
@@ -197,13 +174,13 @@ SCENARIO("Green canal is tresholded correctly", "treshold green") {
 SCENARIO("Blue canal is tresholded correctly", "treshold green") {
 
     GIVEN("Loaded images ") {
-        sf::Image image;
-        image.loadFromFile("C:/Users/p.lubanski/Source/Repos/CPP Learning2/Project2/obraz6.bmp");
+        cv::Mat image;
+        image = cv::imread("C:/Users/p.lubanski/Source/Repos/CPP Learning2/Project2/obraz6.bmp", cv::IMREAD_COLOR);
 
         Comunication comunication;
         std::string file_name = "obraz1.bmp";
         Picture picture = comunication.open(file_name);
-        sf::Image* result = picture.getImage();
+        cv::Mat* result = picture.getImage();
 
         WHEN("Treshold function is called with parameters: canal = b (98), treshold = 100") {
 
@@ -212,12 +189,12 @@ SCENARIO("Blue canal is tresholded correctly", "treshold green") {
 
             THEN("Images are identical") {
 
-                for (int x = 0; x < picture.getImage()->getSize().x; x++) {
+                for (int x = 0; x < picture.getSizeX(); x++) {
 
-                    for (int y = 0; y < picture.getImage()->getSize().y; y++) {
+                    for (int y = 0; y < picture.getSizeY(); y++) {
 
-                        sf::Color expected_pixel = image.getPixel(x, y);
-                        sf::Color pixel = result->getPixel(x, y);
+                        auto expected_pixel = image.at<cv::Vec3b>(y, x);
+                        auto pixel = result->at<cv::Vec3b>(y, x);
 
                         REQUIRE(expected_pixel == pixel);
                     }

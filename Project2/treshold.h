@@ -15,24 +15,38 @@ public:
 	int* getTreshold() { return &treshold_; };
 
 	void makeEffect(Picture& e_image_) override {
-		sf::Color color;
 
-		for (int x = 0; x < e_image_.getImage()->getSize().x; x++) {
+		for (int x = 0; x < e_image_.getSizeX(); x++) {
 
-			for (int y = 0; y < e_image_.getImage()->getSize().y; y++) {
+			for (int y = 0; y < e_image_.getSizeY(); y++) {
 
+				if (e_image_.getPixel(x, y)[0] < treshold_ and canal_ == 98) {
+					std::vector<int> color;
 
-				color = e_image_.getImage()->getPixel(x, y);
-				if (e_image_.getImage()->getPixel(x, y).r < treshold_ and canal_ == 114) {
-					color.r = treshold_;
+					color.push_back(treshold_);
+					color.push_back(e_image_.getPixel(x, y)[1]);
+					color.push_back(e_image_.getPixel(x, y)[2]);
+
+					e_image_.setPixel(x, y, color);
 				}
-				if (e_image_.getImage()->getPixel(x, y).g < treshold_ and canal_ == 103) {
-					color.g = treshold_;
+				if (e_image_.getPixel(x, y)[1] < treshold_ and canal_ == 103) {
+					std::vector<int> color;
+
+					color.push_back(e_image_.getPixel(x, y)[0]);
+					color.push_back(treshold_);
+					color.push_back(e_image_.getPixel(x, y)[2]);
+
+					e_image_.setPixel(x, y, color);
 				}
-				if (e_image_.getImage()->getPixel(x, y).b < treshold_ and canal_ == 98) {
-					color.b = treshold_;
+				if (e_image_.getPixel(x, y)[2] < treshold_ and canal_ == 114) {
+					std::vector<int> color;
+
+					color.push_back(e_image_.getPixel(x, y)[0]);
+					color.push_back(e_image_.getPixel(x, y)[1]);
+					color.push_back(treshold_);
+
+					e_image_.setPixel(x, y, color);
 				}
-				e_image_.getImage()->setPixel(x, y, color);
 
 			}
 		}

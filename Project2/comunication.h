@@ -29,8 +29,8 @@ public:
 	Picture open(std::string& imageName) {
 
 		Picture picture;
-
-		while (!picture.openPicture("C:/Users/p.lubanski/source/repos/CPP Learning2/Project2/" + imageName)) {
+		std::string fileName =  imageName;
+		while (picture.openPicture(fileName)) {
 			std::cout << "Niewlasciwa nazwa pliku, podaj inna: \n";
 			std::cin >> imageName;
 		}
@@ -70,7 +70,6 @@ public:
 					{
 						makeTresholdComunication();
 						std::array<int, 3> tab2= { 3, canal_, value_int_ };
-						std::cout << canal_ << '\n';
 						operation_vec.push_back(tab2);
 						num++;
 						break;
@@ -135,11 +134,11 @@ public:
 			try {
 				std::getline(std::cin, horizontal);
 				horizontal_int = std::stoi(horizontal);
-				if ((horizontal_int < picture.getImage()->getSize().x) and (horizontal_int > 0)) {
+				if ((horizontal_int < picture.getSizeX()) and (horizontal_int > 0)) {
 					correct_value = true;
 				}
 				else {
-					std::cout << "Podaj wartosc liczbowa z zakresu (0 - " << picture.getImage()->getSize().x << ") :\n";
+					std::cout << "Podaj wartosc liczbowa z zakresu (0 - " << picture.getSizeX() << ") :\n";
 				}
 			}
 			catch (std::invalid_argument e) {
@@ -156,11 +155,11 @@ public:
 			try {
 				std::getline(std::cin, vertical);
 				vertical_int = std::stoi(vertical);
-				if ((vertical_int < picture.getImage()->getSize().y) and (vertical_int > 0)) {
+				if ((vertical_int < picture.getSizeY()) and (vertical_int > 0)) {
 					correct_value1 = true;
 				}
 				else {
-					std::cout << "Podaj wartosc liczbowa z zakresu (0 - " << picture.getImage()->getSize().y << ") :\n";
+					std::cout << "Podaj wartosc liczbowa z zakresu (0 - " << picture.getSizeY() << ") :\n";
 				}
 			}
 			catch (std::invalid_argument e) {

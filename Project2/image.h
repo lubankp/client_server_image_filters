@@ -1,59 +1,71 @@
 #pragma once
 #include <iostream>
-#include <SFML/Graphics.hpp>
+//#include <SFML/Graphics.hpp>
 #include <string>
+#include <opencv2/core.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/highgui.hpp>
 
 
 class Picture {
 
-	sf::Image image_;
+	cv::Mat image_;
 
 public:
 	
-	bool openPicture(std::string fileName) {
+	bool openPicture(std::string &fileName) {
 
-		return	image_.loadFromFile(fileName);
-	}
-
-	void createPicture(unsigned int width, unsigned int high, sf::Color color) {
-
-		image_.create(width, high, color);
+		image_ = cv::imread(fileName, cv::IMREAD_COLOR);
+		if (image_.empty())
+		{
+			std::cout << "Could not read the image: " << fileName << std::endl;
+			return	1;
+		}
+		else
+			return 0;
 	}
 
 	void writePicture(std::string fileName) {
 
-		image_.saveToFile(fileName);
+		cv::imwrite(fileName, image_);
 	}
 
 	
 	void show() {
 
-		sf::RenderWindow window(sf::VideoMode(image_.getSize().x, image_.getSize().y), "Picture");
-		sf::Texture texture;
-		sf::IntRect r1(0, 0, image_.getSize().x, image_.getSize().y);
-		texture.loadFromImage(image_, r1);
-
-
-		while (window.isOpen())
-		{
-			// handle events
-			sf::Event event;
-			while (window.pollEvent(event))
-			{
-				if (event.type == sf::Event::Closed)
-					window.close();
-			}
-
-			window.clear();
-			sf::Sprite sprite(texture);
-			window.draw(sprite);
-			window.display();
-		}
-
+		//cv::namedWindow("Display Window", cv::WINDOW_GUI_NORMAL);
+		cv::imshow("Display Window", image_);
+		cv::waitKey(0);
+		cv::destroyWindow("Display Window");
 	}
 
-	sf::Image* getImage() { return &image_; };
+	cv::Mat* getImage() { return &image_; };
 	
+	int getSizeX() {
+		return image_.cols;
+	}
+
+	int getSizeY() {
+		return image_.rows;
+	}
+
+	std::vector<int> getPixel(int x, int y) {
+	
+		std::vector<int> pixel = {0,0,0};
+			
+		pixel[0] = image_.at<cv::Vec3b>(y, x)[0];
+		pixel[1] = image_.at<cv::Vec3b>(y, x)[1];
+		pixel[2] = image_.at<cv::Vec3b>(y, x)[2];
+		return pixel;
+	}
+
+	void setPixel(int x, int y, std::vector<int> vec) {
+
+		image_.at<cv::Vec3b>(y, x)[0] = vec[0];
+		image_.at<cv::Vec3b>(y, x)[1] = vec[1];
+		image_.at<cv::Vec3b>(y, x)[2] = vec[2];
+
+	}
 
 
 
