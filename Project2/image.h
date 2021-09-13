@@ -21,8 +21,10 @@ public:
 			std::cout << "Could not read the image: " << fileName << std::endl;
 			return	1;
 		}
-		else
+		else {
+		
 			return 0;
+		}
 	}
 
 	void writePicture(std::string fileName) {

@@ -10,12 +10,12 @@
 class Comunication {
 
 
-	std::string imageName_;
+	std::string imageName_ = "";
 	std::string operation_ = "";
-	int vertical_int;
-	int horizontal_int;
-	int value_int_;
-	int canal_;
+	int vertical_int = 0;
+	int horizontal_int = 0;
+	int value_int_ = 0;
+	int canal_ = 0;
 
 public:
 

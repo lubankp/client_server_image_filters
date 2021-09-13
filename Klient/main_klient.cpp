@@ -1,86 +1,113 @@
-#include <iostream>
-#include <cstdlib>
 #include "klient.h"
-#include "yami.h"
-#include <string>
 
 
-int main(){
+
+
+void send_reply(yami::agent& client_agent, std::string& message_name, const std::string& server_address, yami::parameters& params, int& step) {
+
+   
+    auto message = client_agent.send(server_address, "printer", message_name, params, 0, true);
+    message->wait_for_completion();
+
+    const yami::message_state state = message->get_state();
+
+    if (state == yami::replied)
+    {
+        const yami::parameters& reply = message->get_reply();
+
+        std::string answer_data = reply.get_string(message_name);
+        step = reply.get_integer("step");
+
+        std::cout << answer_data << '\n';
+        
+    }
+    else if (state == yami::rejected)
+    {
+        std::cout << "The message has been rejected: " << message->get_exception_msg();
+    }
+    else
+    {
+        std::cout << "The message has been abandoned.";
+    }
+}
+
+
+int main() {
 
     const std::string server_address = "tcp://localhost:12345";
 
     try
     {
         yami::agent client_agent;
-
-        yami::parameters params;
-
-        bool getNumbers = true;
-        std::string a;
-        std::string b;
-        int a_num;
-        int b_num;
        
-
-            std::getline(std::cin, a);
-            a_num = std::stoi(a);
-            std::getline(std::cin, b);
-            b_num = std::stoi(b);
-
-        
-
-            params.set_integer("a", a_num);
-            params.set_integer("b", b_num);
-        
-            std::unique_ptr<yami::outgoing_message> om(client_agent.send(server_address, "printer", "print", params, 0, true));
-            om->wait_for_completion();
-
-            
-                const yami::message_state state = om->get_state();
-
-                if (state == yami::replied)
-                {
-                    const yami::parameters& reply = om->get_reply();
-
-                    int sum = reply.get_integer("sum");
-                    int difference = reply.get_integer("difference");
-                    int product = reply.get_integer("product");
-
-                    int ratio;
-                    yami::parameter_entry ratio_entry;
-                    const bool ratio_defined = reply.find("ratio", ratio_entry);
-                    if (ratio_defined)
-                    {
-                        ratio = ratio_entry.get_integer();
-                    }
-                    std::cout << "sum        = " << sum << '\n';
-                    std::cout << "difference = " << difference << '\n';
-                    std::cout << "product    = " << product << '\n';
-                    std::cout << "ratio      = ";
-                    if (ratio_defined)
-                    {
-                        std::cout << ratio;
-                    }
-                    else
-                    {
-                        std::cout << "<undefined>";
-                    }
-
-
+        Comunication comunication;
+        int step = 0;
+        bool end = 0;
+        do  {  
+            yami::parameters params;
+            std::string message_name; 
+           
+            switch (step)
+            {
+                case 0: {
+                    comunication.init(params);
+                    message_name = "init";
+                    send_reply(client_agent, message_name, server_address, params, step);
+                    break;
                 }
-                else if (state == yami::rejected)
-                {
-                    std::cout << "The message has been rejected: " << om->get_exception_msg();
-
+                case 1: {
+                    comunication.chooseImage(params);
+                    message_name = "image";
+                    send_reply(client_agent, message_name, server_address, params, step);
+                    break;
                 }
-                else
-                {
-                    std::cout << "The message has been abandoned.";
+                case 2: {
+                    comunication.chooseOperation(params);
+                    message_name = "operation";
+                    send_reply(client_agent, message_name, server_address, params, step);
+                    break;
+                }
+                case 3: {
+                    comunication.setParametersFrameHorizontal(params);
+                    message_name = "horizontal";
+                    send_reply(client_agent, message_name, server_address, params, step);
+                    break;
+                }
+                case 4: {
+                    comunication.setParametersFrameVertical(params);
+                    message_name = "vertical";
+                    send_reply(client_agent, message_name, server_address, params, step);
+                    break;
+                }
+                case 5: {
+                    comunication.setParametersTresholdCanal(params);
+                    message_name = "canal";
+                    send_reply(client_agent, message_name, server_address, params, step);
+                    break;
+                }
+                case 6: {
+                    comunication.setParametersTresholdValue(params);
+                    message_name = "treshold";
+                    send_reply(client_agent, message_name, server_address, params, step);
+                    break;
+                }
+                case 7: {
+                    comunication.execute(params);
+                    message_name = "execute";
+                    send_reply(client_agent, message_name, server_address, params, step);
+                    break;
+                }
+                default: {
+                    if (end == 0) {
+                        std::cout << "END" << std::endl;
+                        end = 1;
+                    }
+                    break;
                 }
 
-                std::cout << std::endl;
+            }
 
-            
+        } while (true);
     }
     catch (const std::exception& e)
     {
