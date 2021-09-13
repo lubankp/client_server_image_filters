@@ -80,8 +80,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <ExternalIncludePath>C:\Users\p.lubanski\Source\Repos\CPP Learning2\Project2;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>C:\Users\p.lubanski\Source\Repos\CPP Learning2\Project2\yami4-cpp;C:\Users\p.lubanski\Source\Repos\CPP Learning2\Project2\SFML-2.5.1\lib;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>..\Headers_and_libraries;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -123,13 +123,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\opencv_source\sources\modules\videoio\include;.\opencv_source\sources\modules\imgcodecs\include;.\opencv_build;.\opencv_source\sources\modules\core\include;.\opencv_source\sources\modules\highgui\include;.\opencv_build\include;.\yami4-cpp;.\yami4-core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Headers_and_libraries\opencv_source\sources\modules\videoio\include;..\Headers_and_libraries\opencv_source\sources\modules\imgcodecs\include;..\Headers_and_libraries\opencv_build;..\Headers_and_libraries\opencv_source\sources\modules\core\include;..\Headers_and_libraries\opencv_source\sources\modules\highgui\include;..\Headers_and_libraries\opencv_build\include;..\Headers_and_libraries\yami4-cpp;..\Headers_and_libraries\yami4-core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opencv_calib3d453d.lib;opencv_core453d.lib;opencv_dnn453d.lib;opencv_features2d453d.lib;opencv_flann453d.lib;opencv_gapi453d.lib;opencv_highgui453d.lib;opencv_imgcodecs453d.lib;opencv_imgproc453d.lib;opencv_ml453d.lib;opencv_objdetect453d.lib;opencv_photo453d.lib;opencv_stitching453d.lib;opencv_ts453d.lib;opencv_video453d.lib;opencv_videoio453d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>.\yami4-core;.\yami4-cpp;.\opencv_build\lib\Debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\Headers_and_libraries\yami4-core;..\Headers_and_libraries\yami4-cpp;..\Headers_and_libraries\opencv_build\lib\Debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

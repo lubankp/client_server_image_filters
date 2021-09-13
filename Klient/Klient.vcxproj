@@ -123,13 +123,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\p.lubanski\Source\Repos\CPP Learning2\Project2\yami4-cpp;C:\Users\p.lubanski\Source\Repos\CPP Learning2\Project2\yami4-core;C:\Users\p.lubanski\Source\Repos\CPP Learning2\Project2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Headers_and_libraries\yami4-core;..\Headers_and_libraries\yami4-cpp;..\Headers_and_libraries;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>yamicpp-debug.lib;yamicore-debug.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\p.lubanski\Source\Repos\CPP Learning2\Project2\yami4-core;C:\Users\p.lubanski\Source\Repos\CPP Learning2\Project2\yami4-cpp;C:\Users\p.lubanski\Source\Repos\CPP Learning2\Project2;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\Headers_and_libraries\yami4-core;..\Headers_and_libraries\yami4-cpp;..\Headers_and_libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

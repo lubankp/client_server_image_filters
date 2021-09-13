@@ -26,6 +26,8 @@ public:
 		}
 	}
 
+	cv::Mat* getImage() { return &image_; }
+
 	void writePicture(std::string fileName) {
 
 		cv::imwrite(fileName, image_);
