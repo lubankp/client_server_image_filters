@@ -11,9 +11,7 @@ public:
 
 	Treshold(int canal, int treshold) : canal_(canal), treshold_(treshold) {};
 
-	int* getCanal() { return &canal_; };
-	int* getTreshold() { return &treshold_; };
-
+	
 	void makeEffect(Picture& e_image_) override {
 
 		for (int x = 0; x < e_image_.getSizeX(); x++) {

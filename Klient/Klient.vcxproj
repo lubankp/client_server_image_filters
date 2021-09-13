@@ -149,10 +149,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main_klient.cpp" />
+    <ClCompile Include="main_client.cpp" />
+    <ClCompile Include="comunication_client.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="klient.h" />
+    <ClInclude Include="client.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

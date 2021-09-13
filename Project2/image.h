@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-//#include <SFML/Graphics.hpp>
 #include <string>
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
@@ -35,13 +34,10 @@ public:
 	
 	void show() {
 
-		//cv::namedWindow("Display Window", cv::WINDOW_GUI_NORMAL);
 		cv::imshow("Display Window", image_);
 		cv::waitKey(0);
 		cv::destroyWindow("Display Window");
 	}
-
-	cv::Mat* getImage() { return &image_; };
 	
 	int getSizeX() {
 		return image_.cols;
@@ -68,7 +64,4 @@ public:
 		image_.at<cv::Vec3b>(y, x)[2] = vec[2];
 
 	}
-
-
-
 };

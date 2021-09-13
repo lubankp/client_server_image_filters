@@ -10,9 +10,6 @@ public:
 
 	Frame(int horizontal, int vertical) : horizontal_(horizontal), vertical_(vertical) {};
 	
-	int* getHorizontal() { return &horizontal_; };
-	int* getVertical() { return &vertical_; };
-
 	void makeEffect(Picture& e_image_) override {
 
 		int horizontal_s = (e_image_.getSizeX() - horizontal_) / 2;
