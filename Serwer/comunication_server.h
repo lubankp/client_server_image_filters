@@ -49,15 +49,15 @@ public:
 
 		std::string fileName = imageName;
 		std::string message = " ";
-
-		if (picture_.openPicture(fileName) == 1) {
-			message = "Niewlasciwa nazwa pliku, podaj inna: \n";
-		}
-		else
-		{
+		try{
+			picture_.openPicture(fileName); 
 
 			message = "Wyberz operacje (1-inwersja, 2-biala_ramka, 3-tresholding_kanalu, 0-koniec wprowadzania): \n";
 			step_ = 2;
+		}
+		catch (const myExceptions& e)
+		{
+			message = e.what();
 		}
 		return message;
 	}
@@ -101,7 +101,7 @@ public:
 			}
 			}
 		}
-		catch (std::invalid_argument e)
+		catch (const std::invalid_argument &e)
 		{
 			message = "Niewlasciwa nazwa operacji, podaj (1, 2, 3, 0): ";
 			step_ = 2;
@@ -126,7 +126,7 @@ public:
 					step_ = 3;
 				}
 			}
-			catch (std::invalid_argument e) {
+			catch (const std::invalid_argument &e) {
 				message = "Error: Podaj wartosc liczbowa z zakresu (0 - " + std::to_string(picture_.getSizeX()) + " ):";
 				step_ = 3;
 			}
@@ -151,7 +151,7 @@ public:
 				step_ = 4;
 			}
 		}
-		catch (std::invalid_argument e) {
+		catch (const std::invalid_argument &e) {
 			message = "Podaj wartosc liczbowa z zakresu (0 - " + std::to_string(picture_.getSizeY()) + " ):";
 			step_ = 4;
 		}
@@ -193,7 +193,7 @@ public:
 				step_ = 6;
 			}
 		}
-		catch (std::invalid_argument e) {
+		catch (const std::invalid_argument &e) {
 			message = "Podaj wartosc liczbowa z zakresu (0 - 255):";
 			step_ = 6;
 		}

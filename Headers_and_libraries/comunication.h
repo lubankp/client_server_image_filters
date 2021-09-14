@@ -1,3 +1,4 @@
+#pragma once
 #include "yami.h"
 #include <memory>
 #include "inversion.h"
@@ -30,7 +31,16 @@ public:
 
 		Picture picture;
 		std::string fileName =  imageName;
-		while (picture.openPicture(fileName)) {
+		bool corr = false;
+		while (corr) {
+			try {
+				picture.openPicture(fileName);
+				corr = true;
+			}
+			catch (const myExceptions& e)
+			{
+				std::cout << e.what();
+			}
 			std::cout << "Niewlasciwa nazwa pliku, podaj inna: \n";
 			std::cin >> imageName;
 		}

@@ -167,6 +167,7 @@
     <ClCompile Include="inversion.h" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="execute.h" />
+    <ClCompile Include="exeption.h" />
     <ClCompile Include="treshold.h" />
   </ItemGroup>
   <ItemGroup>

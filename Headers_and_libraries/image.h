@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include <string>
+#pragma once
+#include "exeption.h"
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
@@ -12,17 +14,12 @@ class Picture {
 
 public:
 	
-	bool openPicture(std::string &fileName) {
+	void openPicture(std::string &fileName) {
 
 		image_ = cv::imread(fileName, cv::IMREAD_COLOR);
 		if (image_.empty())
 		{
-			std::cout << "Could not read the image: " << fileName << std::endl;
-			return	1;
-		}
-		else {
-		
-			return 0;
+			throw myExceptions{ "Niewlasciwa nazwa pliku: " + fileName + " , podaj inn¹:" };
 		}
 	}
 
