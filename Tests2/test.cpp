@@ -12,7 +12,7 @@ SCENARIO("File is loaded correctly", "file") {
     
     GIVEN("Loaded images ") {
         cv::Mat image;
-        image = cv::imread("C:/Users/p.lubanski/Source/Repos/CPP Learning2/Project2/obraz1.bmp", cv::IMREAD_COLOR);
+        image = cv::imread("../Headers_and_libraries/obraz1.bmp", cv::IMREAD_COLOR);
         Comunication comunication;
 
         WHEN("Init function is called") {
@@ -42,7 +42,7 @@ SCENARIO("Image is inverted correctly", "inversion") {
 
     GIVEN("Loaded images ") {
         cv::Mat image;
-        image = cv::imread("C:/Users/p.lubanski/Source/Repos/CPP Learning2/Project2/obraz2.bmp", cv::IMREAD_COLOR);
+        image = cv::imread("../Headers_and_libraries/obraz2.bmp", cv::IMREAD_COLOR);
 
         Comunication comunication;
         std::string file_name = "obraz1.bmp";
@@ -75,7 +75,7 @@ SCENARIO("Frame is printed correctly", "treshold red") {
 
     GIVEN("Loaded images ") {
         cv::Mat image;
-        image = cv::imread("C:/Users/p.lubanski/Source/Repos/CPP Learning2/Project2/obraz3.bmp", cv::IMREAD_COLOR);
+        image = cv::imread("../Headers_and_libraries/obraz3.bmp", cv::IMREAD_COLOR);
 
         Comunication comunication;
         std::string file_name = "obraz1.bmp";
@@ -109,7 +109,7 @@ SCENARIO("Red canal is tresholded correctly", "treshold red") {
 
     GIVEN("Loaded images ") {
         cv::Mat image;
-        image = cv::imread("C:/Users/p.lubanski/Source/Repos/CPP Learning2/Project2/obraz4.bmp", cv::IMREAD_COLOR);
+        image = cv::imread("../Headers_and_libraries/obraz4.bmp", cv::IMREAD_COLOR);
 
         Comunication comunication;
         std::string file_name = "obraz1.bmp";
@@ -142,7 +142,7 @@ SCENARIO("Green canal is tresholded correctly", "treshold green") {
 
     GIVEN("Loaded images ") {
         cv::Mat image;
-        image = cv::imread("C:/Users/p.lubanski/Source/Repos/CPP Learning2/Project2/obraz5.bmp", cv::IMREAD_COLOR);
+        image = cv::imread("../Headers_and_libraries/obraz5.bmp", cv::IMREAD_COLOR);
 
         Comunication comunication;
         std::string file_name = "obraz1.bmp";
@@ -175,7 +175,7 @@ SCENARIO("Blue canal is tresholded correctly", "treshold green") {
 
     GIVEN("Loaded images ") {
         cv::Mat image;
-        image = cv::imread("C:/Users/p.lubanski/Source/Repos/CPP Learning2/Project2/obraz6.bmp", cv::IMREAD_COLOR);
+        image = cv::imread("../Headers_and_libraries/obraz6.bmp", cv::IMREAD_COLOR);
 
         Comunication comunication;
         std::string file_name = "obraz1.bmp";
