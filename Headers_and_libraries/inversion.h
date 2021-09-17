@@ -10,11 +10,11 @@ public:
 
 			for (int y = 0; y < e_image_.getSizeY(); y++) {
 
-				std::vector<int> color;
+				std::array<int, 3> color;
 
-				color.push_back(255 - e_image_.getPixel(x, y)[0]);
-				color.push_back(255 - e_image_.getPixel(x, y)[1]);
-				color.push_back(255 - e_image_.getPixel(x, y)[2]);
+				color[0] = 255 - e_image_.getPixel(x, y)[0];
+				color[1] = 255 - e_image_.getPixel(x, y)[1];
+				color[2] = 255 - e_image_.getPixel(x, y)[2];
 			
 				e_image_.setPixel(x, y, color);
 			}

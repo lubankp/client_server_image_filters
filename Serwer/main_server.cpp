@@ -1,4 +1,5 @@
 #include "server.h"
+#include <functional>
 
 int main(){
 
@@ -6,18 +7,9 @@ int main(){
 	
 	try
 	{
-		yami::agent server_agent;
-		
 
-
-		const std::string resolved_address =
-			server_agent.add_listener(server_address);
-
-		std::cout << "The server is listening on "
-			<< resolved_address << std::endl;
-			
-			server_agent.register_object("printer", call);
-		
+		Server server(server_address);
+		server.run();
 
 		// block
 		std::string dummy;

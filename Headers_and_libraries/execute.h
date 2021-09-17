@@ -1,6 +1,6 @@
 
 #pragma once
-#include "image.h"
+#include "picture.h"
 #include "effect.h"
 
 class Execute {

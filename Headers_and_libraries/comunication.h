@@ -30,9 +30,9 @@ public:
 	Picture open(std::string& imageName) {
 
 		Picture picture;
-		std::string fileName =  imageName;
 		bool corr = false;
-		while (corr) {
+		while (!corr) {
+			std::string fileName = imageName;
 			try {
 				picture.openPicture(fileName);
 				corr = true;
@@ -40,9 +40,8 @@ public:
 			catch (const myExceptions& e)
 			{
 				std::cout << e.what();
+				std::cin >> imageName;
 			}
-			std::cout << "Niewlasciwa nazwa pliku, podaj inna: \n";
-			std::cin >> imageName;
 		}
 		return picture;
 	}

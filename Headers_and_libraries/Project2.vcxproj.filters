@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="effect.h">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
@@ -30,9 +27,6 @@
     <ClCompile Include="treshold.h">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="comunication.h">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="execute.h">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
@@ -41,7 +35,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="image.h">
+    <ClInclude Include="picture.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
   </ItemGroup>

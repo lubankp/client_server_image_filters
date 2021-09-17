@@ -5,10 +5,12 @@ class Frame : public Effect {
 
 	int horizontal_;
 	int vertical_;
-
+	
 public:
 
-	Frame(int horizontal, int vertical) : horizontal_(horizontal), vertical_(vertical) {};
+	Frame(int horizontal, int vertical) : horizontal_(horizontal), vertical_(vertical) 
+	{
+	};
 	
 	void makeEffect(Picture& e_image_) override {
 
@@ -24,12 +26,12 @@ public:
 
 				if ((x < horizontal_s or x > horizontal_f) or (y < vertical_s or y > vertical_f)) {
 
-					std::vector<int> vec;
-					vec.push_back(255);
-					vec.push_back(255);
-					vec.push_back(255);
+					std::array<int,3> array;
+					array[0] = 255;
+					array[1] = 255;
+					array[2] = 255;
 
-					e_image_.setPixel(x, y, vec);
+					e_image_.setPixel(x, y, array);
 				}
 			}
 		}

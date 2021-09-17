@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include <string>
-#pragma once
 #include "exeption.h"
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
@@ -19,7 +18,7 @@ public:
 		image_ = cv::imread(fileName, cv::IMREAD_COLOR);
 		if (image_.empty())
 		{
-			throw myExceptions{ "Niewlasciwa nazwa pliku: " + fileName + " , podaj inn¹:" };
+			throw myExceptions{ "Niewlasciwa nazwa pliku: " + fileName + " , podaj inna:" };
 		}
 	}
 
@@ -46,9 +45,9 @@ public:
 		return image_.rows;
 	}
 
-	std::vector<int> getPixel(int x, int y) {
+	std::array<int,3> getPixel(int x, int y) {
 	
-		std::vector<int> pixel = {0,0,0};
+		std::array<int, 3> pixel = {0,0,0};
 			
 		pixel[0] = image_.at<cv::Vec3b>(y, x)[0];
 		pixel[1] = image_.at<cv::Vec3b>(y, x)[1];
@@ -56,11 +55,11 @@ public:
 		return pixel;
 	}
 
-	void setPixel(int x, int y, std::vector<int> vec) {
+	void setPixel(int x, int y, std::array<int,3> array) {
 
-		image_.at<cv::Vec3b>(y, x)[0] = vec[0];
-		image_.at<cv::Vec3b>(y, x)[1] = vec[1];
-		image_.at<cv::Vec3b>(y, x)[2] = vec[2];
+		image_.at<cv::Vec3b>(y, x)[0] = array[0];
+		image_.at<cv::Vec3b>(y, x)[1] = array[1];
+		image_.at<cv::Vec3b>(y, x)[2] = array[2];
 
 	}
 };

@@ -6,7 +6,7 @@
 #include <cstdlib>
 
 
-class Comunication {
+class Comunication_client {
 
 
 public:

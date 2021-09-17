@@ -1,20 +1,15 @@
 #include "client.h"
 
-
-
-int main() {
+int main(){
 
     const std::string server_address = "tcp://localhost:12345";
-
+    int step = 0;
+   
     try
     {
-        yami::agent client_agent;
-       
-        Comunication comunication;
-        int step = 0;
+        Client client(server_address);
+        client.run(step);
         
-        run(client_agent, comunication, server_address, step);
-      
     }
     catch (const std::exception& e)
     {
@@ -22,4 +17,5 @@ int main() {
     }
     std::string key;
     std::getline(std::cin, key);
+   
 }

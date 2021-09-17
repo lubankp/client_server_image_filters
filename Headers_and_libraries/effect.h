@@ -1,5 +1,5 @@
 #pragma once
-#include "image.h"
+#include "picture.h"
 
 class Effect {
 
