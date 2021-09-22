@@ -1,5 +1,4 @@
 #pragma once
-#include "yami.h"
 #include <cstdlib>
 #include <string>
 #include <iostream>
@@ -10,7 +9,7 @@
 #include <vector>
 #include <array>
 #include "execute.h"
-#include "yami.h"
+
 
 class Comunication_server {
 
@@ -44,13 +43,11 @@ public:
 	}
 	
 
-	std::string open(std::string& imageName) {
+	std::string open(const void * pic, int width, int hight) {
 
-
-		std::string fileName = imageName;
 		std::string message = " ";
 		try{
-			picture_.openPicture(fileName); 
+			picture_.bytesToMat((byte*)pic, width, hight);
 
 			message = "Wyberz operacje (I-inwersja, R(horyzontalna,wertykalna)-biala_ramka, C(kanal,treshold)-tresholding_kanalu, 0-koniec wprowadzania): \n";
 			step_ = 2;
@@ -180,7 +177,7 @@ public:
 			case '0':
 			{
 				message = "Koniec wprowadzania";
-				step_ = 7;
+				step_ = 3;
 				break;
 			}
 			default:

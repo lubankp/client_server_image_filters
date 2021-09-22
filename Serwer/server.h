@@ -1,6 +1,6 @@
 #pragma once
 #include "comunication_server.h"
-
+#include "yami.h"
 
 class Server {
 
@@ -42,9 +42,14 @@ public:
 			if (message_name == "image")
 			{
 				answer = params.get_string("image");
+				std::size_t size = params.get_integer("size");
+				auto pic = params.get_binary("picture", size);
+				auto hight = params.get_integer("sizeY");
+				auto width = params.get_integer("sizeX");
+
 				
-				auto mess = comunication_.open(answer);
-				
+				auto mess = comunication_.open(pic, width, hight);
+
 				reply_param.set_string("image", mess);
 				reply_param.set_integer("step", comunication_.step_);
 			}
@@ -56,62 +61,31 @@ public:
 				auto mess = comunication_.createOperationVec(answer);
 
 				reply_param.set_string("operation", mess);
-				reply_param.set_integer("step", comunication_.step_);
-				
+				reply_param.set_integer("step", comunication_.step_);	
 			}
-			/*
-			if (message_name == "horizontal")
-			{
-				answer = params.get_string("horizontal");
-
-				auto mess = comunication_.horizontal(answer);
-
-				reply_param.set_string("horizontal", mess);
-				reply_param.set_integer("step", comunication_.step_);
-			}
-
-			if (message_name == "vertical")
-			{
-				answer = params.get_string("vertical");
-
-				auto mess = comunication_.vertical(answer);
-
-				reply_param.set_string("vertical", mess);
-				reply_param.set_integer("step", comunication_.step_);
-
-			}
-
-			if (message_name == "canal")
-			{
-				answer = params.get_string("canal");
-
-				auto mess = comunication_.canal(answer);
-
-				reply_param.set_string("canal", mess);
-				reply_param.set_integer("step", comunication_.step_);
-			}
-
-			if (message_name == "treshold")
-			{
-				answer = params.get_string("treshold");
-
-				auto mess = comunication_.treshold(answer);
-				
-				reply_param.set_string("treshold", mess);
-				reply_param.set_integer("step", comunication_.step_);
-			}
-			*/
+			
 			if (message_name == "execute")
 			{
 			
 				comunication_.finish_vect_ = comunication_.chooseOperation();
 				comunication_.execute_.execute(comunication_.finish_vect_, comunication_.picture_);
-				comunication_.getPicture().show();
+
 				reply_param.set_string("execute", "end");
-				reply_param.set_integer("step", 8);
+				reply_param.set_integer("step", 4);
+
+				int size = comunication_.picture_.getImage()->total() * comunication_.picture_.getImage()->elemSize();
+				int width = comunication_.picture_.getSizeX();
+				int hight = comunication_.picture_.getSizeY();
+				reply_param.set_integer("sizeX", width);
+				reply_param.set_integer("sizeY", hight);
+
+				auto byte = comunication_.getPicture().matToBytes();
+				
+				reply_param.set_integer("size", size);
+				reply_param.set_binary("picture", byte, size);
+
 			}
 
-			
 			std::cout << "get: " << answer << std::endl;
 			im.reply(reply_param);
 	}

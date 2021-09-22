@@ -9,9 +9,14 @@ class Client {
     yami::agent client_agent_;
     Comunication_client comunication_;
     const std::string server_address_;
+    Picture picture_;
+    std::size_t size_;
+    int width_;
+    int hight_;
 
 public:
-    
+
+    void* byte_;
     Client(const std::string & server_address) : server_address_(server_address) {};
 
     void run( int& step) {
@@ -31,7 +36,7 @@ public:
                 break;
             }
             case 1: {
-                comunication_.chooseImage(params);
+                comunication_.chooseImage(params, picture_);
                 message_name = "image";
                 send_reply( message_name,  params, step);
                 break;
@@ -43,40 +48,19 @@ public:
                 break;
             }
             case 3: {
-                comunication_.setParametersFrameHorizontal(params);
-                message_name = "horizontal";
-                send_reply( message_name,  params, step);
-                break;
-            }
-            case 4: {
-                comunication_.setParametersFrameVertical(params);
-                message_name = "vertical";
-                send_reply( message_name, params, step);
-                break;
-            }
-            case 5: {
-                comunication_.setParametersTresholdCanal(params);
-                message_name = "canal";
-                send_reply( message_name,  params, step);
-                break;
-            }
-            case 6: {
-                comunication_.setParametersTresholdValue(params);
-                message_name = "treshold";
-                send_reply( message_name,  params, step);
-                break;
-            }
-            case 7: {
                 comunication_.execute(params);
                 message_name = "execute";
                 send_reply( message_name,  params, step);
                 break;
             }
+            case 4: {
+
+                comunication_.toImage(byte_, width_, hight_, picture_);
+                picture_.show();
+                
+                break; 
+            }
             default: {
-                if (end == 0) {
-                    std::cout << "END" << std::endl;
-                    end = 1;
-                }
                 break;
             }
 
@@ -101,6 +85,16 @@ public:
 		    step = reply.get_integer("step");
 
 		    std::cout << answer_data << '\n';
+
+            if (step == 4) {
+                
+                hight_ = reply.get_integer("sizeY");
+                width_ = reply.get_integer("sizeX");
+                size_ = reply.get_integer("size");
+                auto tmp = reply.get_binary("picture", size_);
+                byte_ = (void*)(new byte[size_]);
+                memcpy(byte_, tmp, size_);
+            }
 
 	    }
 	    else if (state == yami::rejected)
