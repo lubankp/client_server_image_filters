@@ -1,6 +1,6 @@
 
 #pragma once
-#include "yami.h"
+
 #include <string>
 #include <iostream>
 #include <cstdlib>
@@ -9,7 +9,7 @@
 #include <stdio.h>
 
 
-
+template<class T>
 class Comunication_client {
 
 	
@@ -17,17 +17,15 @@ class Comunication_client {
 public:
 
 	byte* bytes;
-	
 
-
-	void init(yami::parameters& parameters) {
+	void init(T & parameters) {
 
 		std::string init = "connected";
 		parameters.set_string("init", init);
 
 	}
 
-	void chooseImage(yami::parameters& parameters, Picture& picture) {
+	void chooseImage(T & parameters, Picture& picture) {
 
 		std::string imageName;
 		std::getline(std::cin, imageName);
@@ -48,14 +46,14 @@ public:
 		
 	}
 
-	void chooseOperation(yami::parameters& parameters) {
+	void chooseOperation(T & parameters) {
 
 		std::string operation;
 		std::getline(std::cin, operation);
 		parameters.set_string("operation", operation);
 	}
 
-	void execute(yami::parameters& parameters) {
+	void execute(T & parameters) {
 
 		std::string execute = "execute";
 		parameters.set_string("execute", execute);

@@ -1,4 +1,5 @@
 #include "server.h"
+#include "yami.h"
 #include <functional>
 
 int main(){
@@ -8,7 +9,7 @@ int main(){
 	try
 	{
 
-		Server server(server_address);
+		Server<yami::agent, yami::incoming_message, yami::parameters> server(server_address);
 		server.run();
 
 		// block

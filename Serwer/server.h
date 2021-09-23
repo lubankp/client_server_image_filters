@@ -1,10 +1,11 @@
 #pragma once
 #include "comunication_server.h"
-#include "yami.h"
 
+
+template<class T, class R, class S>
 class Server {
 
-	yami::agent server_agent_;
+	T server_agent_;
 	Comunication_server comunication_;
 	const std::string server_address_;
 
@@ -21,13 +22,13 @@ public:
 		server_agent_.register_object("printer", *this);
 	}
 
-	void operator () (yami::incoming_message& im)
+	void operator () (R & im)
 	{
 			
-			const yami::parameters& params = im.get_parameters();
+			const S & params = im.get_parameters();
 
 			std::string answer;
-			yami::parameters reply_param;
+			S reply_param;
 			std::string message_name = im.get_message_name();
 			std::cout << "message_name: " << message_name << std::endl;
 
@@ -47,7 +48,7 @@ public:
 				auto hight = params.get_integer("sizeY");
 				auto width = params.get_integer("sizeX");
 
-				
+				comunication_.get_operation_vector()->clear();
 				auto mess = comunication_.open(pic, width, hight);
 
 				reply_param.set_string("image", mess);

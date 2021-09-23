@@ -3,28 +3,31 @@
 #include "comunication_client.h"
 
 
-
+template<class R, class S, class T>
 class Client {
 
-    yami::agent client_agent_;
-    Comunication_client comunication_;
+    S client_agent_;
+    Comunication_client<R> comunication_;
     const std::string server_address_;
     Picture picture_;
     std::size_t size_;
     int width_;
     int hight_;
+    T replied_;
+    T rejected_;
+
 
 public:
 
     void* byte_;
-    Client(const std::string & server_address) : server_address_(server_address) {};
+    Client(const std::string & server_address, T replied, T rejected) : server_address_(server_address), replied_(replied), rejected_(rejected) {};
 
     void run( int& step) {
 
         bool end = 0;
 
         do {
-            yami::parameters params;
+            R params;
             std::string message_name;
 
             switch (step)
@@ -69,17 +72,17 @@ public:
     }
 
 
-    void send_reply(std::string& message_name, yami::parameters& params, int& step) {
+    void send_reply(std::string& message_name, R & params, int& step) {
 
 
 	    auto message = client_agent_.send(server_address_, "printer", message_name, params, 0, true);
 	    message->wait_for_completion();
 
-	    const yami::message_state state = message->get_state();
+	    const T state = message->get_state();
 
-	    if (state == yami::replied)
+	    if (state == replied_)
 	    {
-		    const yami::parameters& reply = message->get_reply();
+		    const R & reply = message->get_reply();
 
 		    std::string answer_data = reply.get_string(message_name);
 		    step = reply.get_integer("step");
@@ -97,7 +100,7 @@ public:
             }
 
 	    }
-	    else if (state == yami::rejected)
+	    else if (state == rejected_)
 	    {
 		    std::cout << "The message has been rejected: " << message->get_exception_msg();
 	    }

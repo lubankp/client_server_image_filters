@@ -1,4 +1,5 @@
 #include "client.h"
+#include "yami.h"
 
 int main(){
 
@@ -7,7 +8,7 @@ int main(){
    
     try
     {
-        Client client(server_address);
+        Client<yami::parameters, yami::agent, yami::message_state> client(server_address, yami::replied, yami::rejected);
         client.run(step);
         
     }

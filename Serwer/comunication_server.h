@@ -42,6 +42,8 @@ public:
 		return picture_;
 	}
 	
+	std::vector<std::array<int, 3>>* get_operation_vector() { return &operation_vector_; }
+
 
 	std::string open(const void * pic, int width, int hight) {
 
@@ -198,7 +200,7 @@ public:
 	std::vector<std::shared_ptr<Effect>> chooseOperation() {
 
 		std::vector<std::shared_ptr<Effect>> finish_vec;
-		;
+		
 		for (auto element : operation_vector_) {
 			switch (element[0]) {
 			case 1:
