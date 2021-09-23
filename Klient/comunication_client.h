@@ -33,7 +33,7 @@ public:
 		
 		picture.openPicture(imageName);
 		
-		int size = picture.getImage()->total() * picture.getImage()->elemSize();
+		int size = picture.total() * picture.elemSize();
 		auto width_ = picture.getSizeX();
 		auto hight_ = picture.getSizeY();
 		parameters.set_integer("sizeX", width_);

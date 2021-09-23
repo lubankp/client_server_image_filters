@@ -74,7 +74,7 @@ public:
 				reply_param.set_string("execute", "end");
 				reply_param.set_integer("step", 4);
 
-				int size = comunication_.picture_.getImage()->total() * comunication_.picture_.getImage()->elemSize();
+				int size = comunication_.picture_.total() * comunication_.picture_.elemSize();
 				int width = comunication_.picture_.getSizeX();
 				int hight = comunication_.picture_.getSizeY();
 				reply_param.set_integer("sizeX", width);

@@ -6,6 +6,7 @@
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
 
+typedef unsigned char byte;
 
 class Picture {
 
@@ -61,5 +62,28 @@ public:
 		image_.at<cv::Vec3b>(y, x)[1] = array[1];
 		image_.at<cv::Vec3b>(y, x)[2] = array[2];
 
+	}
+
+	byte* matToBytes()
+	{
+		int size = image_.total() * image_.elemSize();
+		byte* bytes = new byte[size];  // you will have to delete[] that later
+		std::memcpy(bytes, image_.data, size * sizeof(byte));
+		return bytes;
+	}
+
+	void bytesToMat(byte* bytes, int width, int height)
+	{
+		image_ = cv::Mat(height, width, CV_8UC3, bytes).clone();
+	}
+
+	size_t total()
+	{
+		return image_.total();
+	}
+
+	size_t elemSize()
+	{
+		return image_.elemSize();
 	}
 };
