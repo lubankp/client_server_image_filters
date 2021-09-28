@@ -1,33 +1,33 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "exeption.h"
+#include "my_exeption.h"
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
 
 typedef unsigned char byte;
 
-class Picture {
+class picture {
 
 	cv::Mat image_;
 
 public:
 	
-	void openPicture(std::string &fileName) {
+	void open_picture(std::string &file_name) {
 
-		image_ = cv::imread(fileName, cv::IMREAD_COLOR);
+		image_ = cv::imread(file_name, cv::IMREAD_COLOR);
 		if (image_.empty())
 		{
-			throw myExceptions{ "Niewlasciwa nazwa pliku: " + fileName + " , podaj inna:" };
+			throw my_exceptions{ "Niewlasciwa nazwa pliku: " + file_name + " , podaj inna:" };
 		}
 	}
 
-	cv::Mat* getImage() { return &image_; }
+	cv::Mat* get_image() { return &image_; }
 
-	void writePicture(std::string fileName) {
+	void write_picture(std::string file_name) {
 
-		cv::imwrite(fileName, image_);
+		cv::imwrite(file_name, image_);
 	}
 
 	
@@ -38,15 +38,15 @@ public:
 		cv::destroyWindow("Display Window");
 	}
 	
-	int getSizeX() {
+	int get_size_x() {
 		return image_.cols;
 	}
 
-	int getSizeY() {
+	int get_size_y() {
 		return image_.rows;
 	}
 
-	std::array<int,3> getPixel(int x, int y) {
+	std::array<int,3> get_pixel(int x, int y) {
 	
 		std::array<int, 3> pixel = {0,0,0};
 			
@@ -56,7 +56,7 @@ public:
 		return pixel;
 	}
 
-	void setPixel(int x, int y, std::array<int,3> array) {
+	void set_pixel(int x, int y, std::array<int,3> array) {
 
 		image_.at<cv::Vec3b>(y, x)[0] = array[0];
 		image_.at<cv::Vec3b>(y, x)[1] = array[1];
@@ -64,7 +64,7 @@ public:
 
 	}
 
-	byte* matToBytes()
+	byte* mat_to_bytes()
 	{
 		int size = image_.total() * image_.elemSize();
 		byte* bytes = new byte[size];  // you will have to delete[] that later
@@ -72,7 +72,7 @@ public:
 		return bytes;
 	}
 
-	void bytesToMat(byte* bytes, int width, int height)
+	void bytes_to_mat(byte* bytes, int width, int height)
 	{
 		image_ = cv::Mat(height, width, CV_8UC3, bytes).clone();
 	}
@@ -82,7 +82,7 @@ public:
 		return image_.total();
 	}
 
-	size_t elemSize()
+	size_t elem_size()
 	{
 		return image_.elemSize();
 	}

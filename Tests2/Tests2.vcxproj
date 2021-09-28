@@ -123,7 +123,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\Headers_and_libraries\opencv_source\sources\modules\videoio\include;..\Headers_and_libraries\opencv_source\sources\modules\imgcodecs\include;..\Headers_and_libraries\opencv_build;..\Headers_and_libraries\opencv_source\sources\modules\core\include;..\Headers_and_libraries\opencv_source\sources\modules\highgui\include;..\Headers_and_libraries\opencv_build\include;..\Headers_and_libraries\yami4-cpp;..\Headers_and_libraries\yami4-core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Headers_and_libraries\x64\Debug;..\Headers_and_libraries\opencv_source\sources\modules\videoio\include;..\Headers_and_libraries\opencv_source\sources\modules\imgcodecs\include;..\Headers_and_libraries\opencv_build;..\Headers_and_libraries\opencv_source\sources\modules\core\include;..\Headers_and_libraries\opencv_source\sources\modules\highgui\include;..\Headers_and_libraries\opencv_build\include;..\Headers_and_libraries\yami4-cpp;..\Headers_and_libraries\yami4-core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

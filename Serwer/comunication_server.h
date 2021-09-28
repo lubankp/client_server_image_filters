@@ -11,7 +11,7 @@
 #include "execute.h"
 
 
-class Comunication_server {
+class comunication_server {
 
 
 	std::vector<std::array<int, 3>> operation_vector_;
@@ -23,22 +23,22 @@ class Comunication_server {
 
 public:
 
-	Picture picture_;
-	std::string imageName_;
-	Execute execute_;
-	std::vector<std::shared_ptr<Effect>> finish_vect_;
+	picture picture_;
+	std::string image_name_;
+	execute execute_;
+	std::vector<std::shared_ptr<effect>> finish_vect_;
 	int step_ = 0;
 
 
 	std::string init() {
 
-		imageName_ = "Wyberz obraz: \n";
+		image_name_ = "Wyberz obraz: \n";
 		step_ = 1;
-		return imageName_;
+		return image_name_;
 	}
 
 
-	Picture getPicture() {
+	picture get_picture() {
 		return picture_;
 	}
 	
@@ -49,19 +49,19 @@ public:
 
 		std::string message = " ";
 		try{
-			picture_.bytesToMat((byte*)pic, width, hight);
+			picture_.bytes_to_mat((byte*)pic, width, hight);
 
 			message = "Wyberz operacje (I-inwersja, R(horyzontalna,wertykalna)-biala_ramka, C(kanal,treshold)-tresholding_kanalu, 0-koniec wprowadzania): \n";
 			step_ = 2;
 		}
-		catch (const myExceptions& e)
+		catch (const my_exceptions& e)
 		{
 			message = e.what();
 		}
 		return message;
 	}
 
-	std::string createOperationVec(std::string& operation)
+	std::string create_operation_vec(std::string& operation)
 	{
 		std::string message;
 
@@ -103,13 +103,13 @@ public:
 					std::cout << horizontal_int << std::endl;
 					std::cout << vertical_int << std::endl;
 
-					if ((horizontal_int > picture_.getSizeX()) or (horizontal_int < 0)) {
+					if ((horizontal_int > picture_.get_size_x()) or (horizontal_int < 0)) {
 
-						message = "Podaj wartosc liczbowa horyzontalna z zakresu (0 - " + std::to_string(picture_.getSizeX()) + " ):";
+						message = "Podaj wartosc liczbowa horyzontalna z zakresu (0 - " + std::to_string(picture_.get_size_x()) + " ):";
 						
-					}else if ((vertical_int > picture_.getSizeY()) or (vertical_int < 0)) {
+					}else if ((vertical_int > picture_.get_size_y()) or (vertical_int < 0)) {
 
-						message = "Podaj wartosc liczbowa wertykalna z zakresu (0 - " + std::to_string(picture_.getSizeY()) + " ):";
+						message = "Podaj wartosc liczbowa wertykalna z zakresu (0 - " + std::to_string(picture_.get_size_y()) + " ):";
 					
 					}else 
 					{ 
@@ -170,7 +170,6 @@ public:
 				else
 				{
 					message = "Niepoprawne dane dla tresholdu:";
-
 				}
 				step_ = 2;
 				break;
@@ -197,31 +196,31 @@ public:
 		return message;
 	}
 	
-	std::vector<std::shared_ptr<Effect>> chooseOperation() {
+	std::vector<std::shared_ptr<effect>> choose_operation() {
 
-		std::vector<std::shared_ptr<Effect>> finish_vec;
+		std::vector<std::shared_ptr<effect>> finish_vec;
 		
 		for (auto element : operation_vector_) {
 			switch (element[0]) {
 			case 1:
 			{
-				std::shared_ptr<Effect> inversion = std::make_shared<Inversion>();
-				finish_vec.push_back(inversion);
+				std::shared_ptr<effect> inversion_ = std::make_shared<inversion>();
+				finish_vec.push_back(inversion_);
 				break;
 			}
 			case 2:
 			{
-				std::shared_ptr<Effect> frame = std::make_shared<Frame>(element[1], element[2]);
-				finish_vec.push_back(frame);
+				std::shared_ptr<effect> frame_ = std::make_shared<frame>(element[1], element[2]);
+				finish_vec.push_back(frame_);
 				break;
 			}
 			case 3:
 			{
-				std::shared_ptr<Effect> treshold = std::make_shared<Treshold>(element[1], element[2]);
+				std::shared_ptr<effect> treshold_ = std::make_shared<treshold>(element[1], element[2]);
 				
-				Treshold tr(element[1], element[2]);
+				//treshold tr(element[1], element[2]);
 				
-				finish_vec.push_back(treshold);
+				finish_vec.push_back(treshold_);
 				break;
 			}
 			}

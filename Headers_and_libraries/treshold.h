@@ -2,53 +2,53 @@
 #include "effect.h"
 
 
-class Treshold : public Effect {
+class treshold : public effect {
 
 	int canal_;
 	int treshold_;
 
 public:
 
-	Treshold(int canal, int treshold) : canal_(canal), treshold_(treshold) {};
+	treshold(int canal, int treshold) : canal_(canal), treshold_(treshold) {};
 
 	
-	void makeEffect(Picture& e_image_) override {
+	void make_effect(picture& e_image_) override {
 
-		for (int x = 0; x < e_image_.getSizeX(); x++) {
+		for (int x = 0; x < e_image_.get_size_x(); x++) {
 
-			for (int y = 0; y < e_image_.getSizeY(); y++) {
+			for (int y = 0; y < e_image_.get_size_y(); y++) {
 
-				if (e_image_.getPixel(x, y)[0] < treshold_ and canal_ == 98) {
+				if (e_image_.get_pixel(x, y)[0] < treshold_ and canal_ == int('b')) {
 					std::array <int,3> color;
 
 					color[0] = treshold_;
-					color[1] = e_image_.getPixel(x, y)[1];
-					color[2] = e_image_.getPixel(x, y)[2];
+					color[1] = e_image_.get_pixel(x, y)[1];
+					color[2] = e_image_.get_pixel(x, y)[2];
 
-					e_image_.setPixel(x, y, color);
+					e_image_.set_pixel(x, y, color);
 				}
-				if (e_image_.getPixel(x, y)[1] < treshold_ and canal_ == 103) {
+				if (e_image_.get_pixel(x, y)[1] < treshold_ and canal_ == int('g')) {
 					std::array<int, 3> color;
 
-					color[0] = e_image_.getPixel(x, y)[0];
+					color[0] = e_image_.get_pixel(x, y)[0];
 					color[1] = treshold_;
-					color[2] = e_image_.getPixel(x, y)[2];
+					color[2] = e_image_.get_pixel(x, y)[2];
 
-					e_image_.setPixel(x, y, color);
+					e_image_.set_pixel(x, y, color);
 				}
-				if (e_image_.getPixel(x, y)[2] < treshold_ and canal_ == 114) {
+				if (e_image_.get_pixel(x, y)[2] < treshold_ and canal_ == int('r')) {
 					std::array<int, 3> color;
 
-					color[0] = e_image_.getPixel(x, y)[0];
-					color[1] = e_image_.getPixel(x, y)[1];
+					color[0] = e_image_.get_pixel(x, y)[0];
+					color[1] = e_image_.get_pixel(x, y)[1];
 					color[2] = treshold_;
 
-					e_image_.setPixel(x, y, color);
+					e_image_.set_pixel(x, y, color);
 				}
 
 			}
 		}
 		
 	}
-	~Treshold(){};
+	~treshold(){};
 };

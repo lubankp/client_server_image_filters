@@ -3,13 +3,13 @@
 #include <functional>
 
 int main(){
-
+	
 	const std::string server_address = "tcp://localhost:12345";
 	
 	try
 	{
 
-		Server<yami::agent, yami::incoming_message, yami::parameters> server(server_address);
+		server<yami::agent, yami::incoming_message, yami::parameters> server(server_address);
 		server.run();
 
 		// block

@@ -1,5 +1,6 @@
 #include "client.h"
 #include "yami.h"
+#include "UDP_client.h"
 
 int main(){
 
@@ -8,7 +9,12 @@ int main(){
    
     try
     {
-        Client<yami::parameters, yami::agent, yami::message_state> client(server_address, yami::replied, yami::rejected);
+        //Client for YUMI-4
+        client<yami::parameters, yami::agent, yami::message_state> client(server_address, yami::replied, yami::rejected);
+
+        //Client for UDP
+       // Client<parameters, agent, message_state> client(server_address, message_state::replied, message_state::rejected);
+        
         client.run(step);
         
     }

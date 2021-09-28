@@ -4,12 +4,12 @@
 
 
 template<class R, class S, class T>
-class Client {
+class client {
 
     S client_agent_;
-    Comunication_client<R> comunication_;
+    comunication_client<R> comunication_;
     const std::string server_address_;
-    Picture picture_;
+    picture picture_;
     std::size_t size_;
     int width_;
     int hight_;
@@ -20,7 +20,7 @@ class Client {
 public:
 
     void* byte_;
-    Client(const std::string & server_address, T replied, T rejected) : server_address_(server_address), replied_(replied), rejected_(rejected) {};
+    client(const std::string & server_address, T replied, T rejected) : server_address_(server_address), replied_(replied), rejected_(rejected) {};
 
     void run( int& step) {
 
@@ -39,13 +39,15 @@ public:
                 break;
             }
             case 1: {
-                comunication_.chooseImage(params, picture_);
+              //  comunication_.chooseImage(command, picture_);
+              //  to_yami_params(command, params);
+                comunication_.choose_image(params, picture_);
                 message_name = "image";
                 send_reply( message_name,  params, step);
                 break;
             }
             case 2: {
-                comunication_.chooseOperation(params);
+                comunication_.choose_operation(params);
                 message_name = "operation";
                 send_reply( message_name,  params, step);
                 break;
@@ -58,7 +60,7 @@ public:
             }
             case 4: {
 
-                comunication_.toImage(byte_, width_, hight_, picture_);
+                comunication_.to_image(byte_, width_, hight_, picture_);
                 picture_.show();
                 
                 break; 
@@ -83,6 +85,7 @@ public:
 	    if (state == replied_)
 	    {
 		    const R & reply = message->get_reply();
+
 
 		    std::string answer_data = reply.get_string(message_name);
 		    step = reply.get_integer("step");

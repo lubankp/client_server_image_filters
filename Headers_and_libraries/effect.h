@@ -1,11 +1,11 @@
 #pragma once
 #include "picture.h"
 
-class Effect {
+class effect {
 
 public:
 	
-	virtual void makeEffect(Picture&) = 0;
-	virtual ~Effect() {};
+	virtual void make_effect(picture&) = 0;
+	virtual ~effect() {};
 };
 

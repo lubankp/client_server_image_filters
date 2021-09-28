@@ -3,15 +3,15 @@
 #include "picture.h"
 #include "effect.h"
 
-class Execute {
+class execute {
 
 
 public:
 
-	void execute(std::vector<std::shared_ptr<Effect>>& finish_vect, Picture& picture) {
+	void execute_fun(std::vector<std::shared_ptr<effect>>& finish_vect, picture& picture) {
 	
 		for (auto element : finish_vect) {
-			element->makeEffect(picture);
+			element->make_effect(picture);
 		}
 	}
 };

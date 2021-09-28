@@ -6,6 +6,7 @@
 #include "frame.h"
 #include <vector>
 #include <array>
+#include "myExeption.h"
 
 
 class Comunication {

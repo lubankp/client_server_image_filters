@@ -18,6 +18,9 @@
     <ClCompile Include="main_server.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="main_server_UDP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="server.h">

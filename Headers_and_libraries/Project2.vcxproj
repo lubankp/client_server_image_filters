@@ -165,7 +165,7 @@
     <ClCompile Include="frame.h" />
     <ClCompile Include="inversion.h" />
     <ClCompile Include="execute.h" />
-    <ClCompile Include="exeption.h" />
+    <ClCompile Include="my_exeption.h" />
     <ClCompile Include="treshold.h" />
   </ItemGroup>
   <ItemGroup>

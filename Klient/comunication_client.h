@@ -4,13 +4,14 @@
 #include <string>
 #include <iostream>
 #include <cstdlib>
-#include "exeption.h"
+#include "my_exeption.h"
 #include "execute.h"
 #include <stdio.h>
+#include <WS2tcpip.h>
 
 
 template<class T>
-class Comunication_client {
+class comunication_client {
 
 	
 
@@ -25,28 +26,28 @@ public:
 
 	}
 
-	void chooseImage(T & parameters, Picture& picture) {
+	void choose_image(T & parameters, picture& picture) {
 
-		std::string imageName;
-		std::getline(std::cin, imageName);
-		parameters.set_string("image", imageName);
+		std::string image_name;
+		std::getline(std::cin, image_name);
+		parameters.set_string("image", image_name);
 		
-		picture.openPicture(imageName);
+		picture.open_picture(image_name);
 		
-		int size = picture.total() * picture.elemSize();
-		auto width_ = picture.getSizeX();
-		auto hight_ = picture.getSizeY();
+		int size = picture.total() * picture.elem_size();
+		auto width_ = picture.get_size_x();
+		auto hight_ = picture.get_size_y();
 		parameters.set_integer("sizeX", width_);
 		parameters.set_integer("sizeY", hight_);
 
-		bytes = picture.matToBytes();
+		bytes = picture.mat_to_bytes();
 
 		parameters.set_integer("size", size);
 		parameters.set_binary("picture",bytes, size);
 		
 	}
 
-	void chooseOperation(T & parameters) {
+	void choose_operation(T & parameters) {
 
 		std::string operation;
 		std::getline(std::cin, operation);
@@ -59,13 +60,13 @@ public:
 		parameters.set_string("execute", execute);
 	}
 
-	void toImage(void* pic, int width, int hight, Picture& picture)
+	void to_image(void* pic, int width, int hight, picture& picture)
 	{
 		try {
-			picture.bytesToMat((byte*)pic, width, hight);
+			picture.bytes_to_mat((byte*)pic, width, hight);
 
 		}
-		catch (const myExceptions& e)
+		catch (const my_exceptions& e)
 		{
 			std::cout << e.what() << std::endl;
 		}

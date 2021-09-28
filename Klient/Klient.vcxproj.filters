@@ -21,9 +21,15 @@
     <ClCompile Include="comunication_client.h">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="main_client_UDP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="client.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UDP_client.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
