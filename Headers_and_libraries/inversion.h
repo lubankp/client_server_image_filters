@@ -14,10 +14,10 @@ public:
 				color[0] = 255 - e_image_.get_pixel(x, y)[0];
 				color[1] = 255 - e_image_.get_pixel(x, y)[1];
 				color[2] = 255 - e_image_.get_pixel(x, y)[2];
-			
+
 				e_image_.set_pixel(x, y, color);
 			}
 		}
 	}
-	~inversion(){};
+	~inversion() {};
 };

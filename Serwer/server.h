@@ -1,12 +1,14 @@
 #pragma once
 #include "comunication_server.h"
+#include "effect_factory.h"
 
 
-template<class T, class R, class S>
+template<class Agent, class Incoming_Message, class Parameters>
 class server {
 
-	T server_agent_;
+	Agent server_agent_;
 	comunication_server comunication_;
+
 	const std::string server_address_;
 
 public:
@@ -17,18 +19,16 @@ public:
 		std::cout << "The server is listening on " << resolved_address << std::endl;
 	};
 
-	
-	
-	void init_step(std::string &answer, const S params, S &reply_param) {
+	void init_step(std::string& answer, const Parameters params, Parameters& reply_param) {
 
 		answer = params.get_string("init");
 
 		reply_param.set_string("init", comunication_.init());
 		reply_param.set_integer("step", comunication_.step_);
-		
+
 	}
-	
-	void image_step(std::string& answer, const S params, S &reply_param) {
+
+	void image_step(std::string& answer, const Parameters params, Parameters& reply_param) {
 
 		answer = params.get_string("image");
 		std::size_t size = params.get_integer("size");
@@ -44,7 +44,7 @@ public:
 		reply_param.set_integer("step", comunication_.step_);
 	}
 
-	void operation_step(std::string& answer, const S params, S &reply_param) {
+	void operation_step(std::string& answer, const Parameters params, Parameters& reply_param) {
 
 		answer = params.get_string("operation");
 
@@ -54,10 +54,12 @@ public:
 		reply_param.set_integer("step", comunication_.step_);
 	}
 
-	void execute_step(S &reply_param) {
+	void execute_step(Parameters& reply_param) {
 
-		comunication_.finish_vect_ = comunication_.choose_operation();
-		comunication_.execute_.execute_fun(comunication_.finish_vect_, comunication_.picture_);
+		effect_factory effect_factory_(comunication_.operation_vector_);
+		std::vector<std::shared_ptr<effect>> finish_vect_ = effect_factory_.choose_operation();
+		execute execute_;
+		execute_.execute_fun(finish_vect_, comunication_.picture_);
 
 		reply_param.set_string("execute", "end");
 		reply_param.set_integer("step", 4);
@@ -73,20 +75,20 @@ public:
 		reply_param.set_integer("size", size);
 		reply_param.set_binary("picture", byte, size);
 	}
-	
-	void operator () (R& im)
+
+	void operator () (Incoming_Message& im)
 	{
-		
-		const S params = im.get_parameters();
+
+		const Parameters params = im.get_parameters();
 
 		std::string answer;
-		S reply_param;
+		Parameters reply_param;
 		std::string message_name = im.get_message_name();
 		std::cout << "message_name: " << message_name << std::endl;
 
 		if (message_name == "init")
 		{
-			init_step(answer, params, reply_param);		
+			init_step(answer, params, reply_param);
 		}
 
 		if (message_name == "image")
@@ -101,12 +103,12 @@ public:
 
 		if (message_name == "execute")
 		{
-			execute_step(reply_param);		
+			execute_step(reply_param);
 		}
 
 		std::cout << "get: " << answer << std::endl;
 		im.reply(reply_param);
-		
+
 	}
 
 

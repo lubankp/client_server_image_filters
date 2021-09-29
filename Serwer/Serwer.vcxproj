@@ -142,11 +142,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="effect_factory.h" />
     <ClCompile Include="main_server.cpp" />
     <ClCompile Include="main_server_UDP.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="comunication_server.h" />
+    <ClInclude Include="enum_operation.h" />
     <ClInclude Include="server.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

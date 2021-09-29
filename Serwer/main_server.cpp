@@ -2,10 +2,10 @@
 #include "yami.h"
 #include <functional>
 
-int main(){
-	
+int main() {
+
 	const std::string server_address = "tcp://localhost:12345";
-	
+
 	try
 	{
 

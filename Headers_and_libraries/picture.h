@@ -13,8 +13,8 @@ class picture {
 	cv::Mat image_;
 
 public:
-	
-	void open_picture(std::string &file_name) {
+
+	void open_picture(std::string& file_name) {
 
 		image_ = cv::imread(file_name, cv::IMREAD_COLOR);
 		if (image_.empty())
@@ -30,14 +30,14 @@ public:
 		cv::imwrite(file_name, image_);
 	}
 
-	
+
 	void show() {
 
 		cv::imshow("Display Window", image_);
 		cv::waitKey(0);
 		cv::destroyWindow("Display Window");
 	}
-	
+
 	int get_size_x() {
 		return image_.cols;
 	}
@@ -46,17 +46,17 @@ public:
 		return image_.rows;
 	}
 
-	std::array<int,3> get_pixel(int x, int y) {
-	
-		std::array<int, 3> pixel = {0,0,0};
-			
+	std::array<int, 3> get_pixel(int x, int y) {
+
+		std::array<int, 3> pixel = { 0,0,0 };
+
 		pixel[0] = image_.at<cv::Vec3b>(y, x)[0];
 		pixel[1] = image_.at<cv::Vec3b>(y, x)[1];
 		pixel[2] = image_.at<cv::Vec3b>(y, x)[2];
 		return pixel;
 	}
 
-	void set_pixel(int x, int y, std::array<int,3> array) {
+	void set_pixel(int x, int y, std::array<int, 3> array) {
 
 		image_.at<cv::Vec3b>(y, x)[0] = array[0];
 		image_.at<cv::Vec3b>(y, x)[1] = array[1];

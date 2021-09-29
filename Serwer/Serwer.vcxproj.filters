@@ -21,12 +21,18 @@
     <ClCompile Include="main_server_UDP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="effect_factory.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="server.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="comunication_server.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="enum_operation.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

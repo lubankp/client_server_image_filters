@@ -3,31 +3,31 @@
 #include "comunication_client.h"
 
 
-template<class R, class S, class T>
+template<class Parameters, class Agent, class Message_state>
 class client {
 
-	S client_agent_;
-	comunication_client<R> comunication_;
+	Agent client_agent_;
+	comunication_client<Parameters> comunication_;
 	const std::string server_address_;
 	picture picture_;
 	std::size_t size_;
 	int width_;
 	int hight_;
-	T replied_;
-	T rejected_;
+	Message_state replied_;
+	Message_state rejected_;
 
 
 public:
 
 	void* byte_;
-	client(const std::string& server_address, T replied, T rejected) : server_address_(server_address), replied_(replied), rejected_(rejected) {};
+	client(const std::string& server_address, Message_state replied, Message_state rejected) : server_address_(server_address), replied_(replied), rejected_(rejected) {};
 
 	void run(int& step) {
 
 		bool end = 0;
 
 		do {
-			R params;
+			Parameters params;
 			std::string message_name;
 
 			switch (step)
@@ -44,11 +44,11 @@ public:
 				comunication_.choose_image(params, picture_);
 				message_name = "image";
 				send_reply(message_name, params, step);
-				
+
 				break;
 			}
 			case 2: {
-				
+
 				comunication_.choose_operation(params);
 				message_name = "operation";
 				send_reply(message_name, params, step);
@@ -76,18 +76,18 @@ public:
 	}
 
 
-	void send_reply(std::string& message_name, R& params, int& step) {
+	void send_reply(std::string& message_name, Parameters& params, int& step) {
 
 		auto message = client_agent_.send(server_address_, "printer", message_name, params, 0, true);
 
 		message->wait_for_completion();
 
 		try {
-			const T state = message->get_state();
+			const Message_state state = message->get_state();
 
 			if (state == replied_)
 			{
-				const R& reply = message->get_reply();
+				const Parameters& reply = message->get_reply();
 
 				std::string answer_data = reply.get_string(message_name);
 				step = reply.get_integer("step");

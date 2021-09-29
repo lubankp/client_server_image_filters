@@ -5,13 +5,13 @@ class frame : public effect {
 
 	int horizontal_;
 	int vertical_;
-	
+
 public:
 
-	frame(int horizontal, int vertical) : horizontal_(horizontal), vertical_(vertical) 
+	frame(int horizontal, int vertical) : horizontal_(horizontal), vertical_(vertical)
 	{
 	};
-	
+
 	void make_effect(picture& e_image_) override {
 
 		int horizontal_s = (e_image_.get_size_x() - horizontal_) / 2;
@@ -26,7 +26,7 @@ public:
 
 				if ((x < horizontal_s or x > horizontal_f) or (y < vertical_s or y > vertical_f)) {
 
-					std::array<int,3> array;
+					std::array<int, 3> array;
 					array[0] = 255;
 					array[1] = 255;
 					array[2] = 255;
@@ -37,5 +37,5 @@ public:
 		}
 
 	}
-	~frame(){};
+	~frame() {};
 };
