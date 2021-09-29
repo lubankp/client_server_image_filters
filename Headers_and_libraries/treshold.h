@@ -12,7 +12,10 @@ public:
 	treshold(int canal, int treshold) : canal_(canal), treshold_(treshold) {};
 
 	
+	
 	void make_effect(picture& e_image_) override {
+
+		std::cout << canal_ << " tttt" << std::endl;
 
 		for (int x = 0; x < e_image_.get_size_x(); x++) {
 

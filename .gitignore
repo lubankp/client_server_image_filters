@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+*.user
+/Tests2
+/Serwer
+/Project2
+/Klient
+/.vs

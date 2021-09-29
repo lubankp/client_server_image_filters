@@ -8,17 +8,26 @@
 #include "frame.h"
 #include <vector>
 #include <array>
+#include <map>
 #include "execute.h"
+
 
 
 class comunication_server {
 
 
-	std::vector<std::array<int, 3>> operation_vector_;
+	std::vector<std::map<std::string,int>> operation_vector_;
 	int vertical_int;
 	int horizontal_int;
 	int treshold_;
 	int canal_;
+
+
+	enum operation {
+		inversion_enum,
+		frame_enum,
+		treshold_enum
+	};
 	
 
 public:
@@ -42,7 +51,7 @@ public:
 		return picture_;
 	}
 	
-	std::vector<std::array<int, 3>>* get_operation_vector() { return &operation_vector_; }
+	std::vector<std::map<std::string, int>>* get_operation_vector() { return &operation_vector_; }
 
 
 	std::string open(const void * pic, int width, int hight) {
@@ -70,8 +79,8 @@ public:
 			switch (operation[0]) {
 			case 'I':
 			{
-				std::array<int, 3> tab = { 1, 0, 0 };
-				operation_vector_.push_back(tab);
+				std::map<std::string, int> map = { {"operation", operation::inversion_enum} };
+				operation_vector_.push_back(map);
 				message = "Wprowadzono inversje";
 				step_ = 2;
 				break;
@@ -89,14 +98,12 @@ public:
 				if (found1 != std::string::npos and found2 != std::string::npos)
 				{
 					horizontal_temp = operation.substr(found1);
-					horizontal.assign(horizontal_temp.begin(), horizontal_temp.end() - found2);
+					horizontal.assign(horizontal_temp.begin(), horizontal_temp.end() - (operation.size() - found2));
 					vertical_temp = operation.substr(found2 + 1);
 					vertical.assign(vertical_temp.begin(), vertical_temp.end() - 1);
 					
 					horizontal_int = std::stoi(horizontal);
 					vertical_int = std::stoi(vertical);
-					std::cout << horizontal_int << std::endl;
-					std::cout << vertical_int << std::endl;
 
 					if ((horizontal_int > picture_.get_size_x()) or (horizontal_int < 0)) {
 
@@ -108,8 +115,8 @@ public:
 					
 					}else 
 					{ 
-						std::array<int, 3> tab1 = { 2, horizontal_int, vertical_int };
-						operation_vector_.push_back(tab1);
+						std::map<std::string, int> map1 = { {"operation", operation::frame_enum},{"horizontal", horizontal_int},{"vertical", vertical_int} };
+						operation_vector_.push_back(map1);
 						message = "Wprowadzono ramke";
 					}
 				}
@@ -133,26 +140,24 @@ public:
 				if (found3 != std::string::npos and found4 != std::string::npos)
 				{
 					canal_temp = operation.substr(found3);
-					canal.assign(canal_temp.begin(), canal_temp.end() - found4);
+					canal.assign(canal_temp.begin(), canal_temp.end() - (operation.size() - found4));
 					treshold_temp = operation.substr(found4 + 1);
 					treshold.assign(treshold_temp.begin(), treshold_temp.end() - 1);
 
 					canal_ = (int)canal[0];
 					treshold_ = std::stoi(treshold);
-					std::cout << canal_ << std::endl;
-					std::cout << treshold_ << std::endl;
 
 					if (canal != "r" and canal != "g" and canal != "b")
 					{ 
-						message = "Wprowadzono kanal (r,g,b):";
+						message = "Wprowadz kanal (r,g,b):";
 					}
 					else if ((treshold_ > 255) or (treshold_ < 0)) {
 
 						message = "Wprowadz treshold z zakresu (0 - 255):";	
 					}
 					else {
-						std::array<int, 3> tab1 = { 3, canal_, treshold_ };
-						operation_vector_.push_back(tab1);
+						std::map<std::string, int> map2 = { {"operation", operation::treshold_enum},{"canal", canal_},{"treshold", treshold_} };
+						operation_vector_.push_back(map2);
 						message = "Wprowadzono treshold";
 						
 					}	
@@ -191,24 +196,22 @@ public:
 		std::vector<std::shared_ptr<effect>> finish_vec;
 		
 		for (auto element : operation_vector_) {
-			switch (element[0]) {
-			case 1:
+			switch (element["operation"]) {
+			case operation::inversion_enum:
 			{
 				std::shared_ptr<effect> inversion_ = std::make_shared<inversion>();
 				finish_vec.push_back(inversion_);
 				break;
 			}
-			case 2:
+			case operation::frame_enum:
 			{
-				std::shared_ptr<effect> frame_ = std::make_shared<frame>(element[1], element[2]);
+				std::shared_ptr<effect> frame_ = std::make_shared<frame>(element["horizontal"], element["vertical"]);
 				finish_vec.push_back(frame_);
 				break;
 			}
-			case 3:
+			case operation::treshold_enum:
 			{
-				std::shared_ptr<effect> treshold_ = std::make_shared<treshold>(element[1], element[2]);
-				
-				//treshold tr(element[1], element[2]);
+				std::shared_ptr<effect> treshold_ = std::make_shared<treshold>(element["canal"], element["treshold"]);
 				
 				finish_vec.push_back(treshold_);
 				break;

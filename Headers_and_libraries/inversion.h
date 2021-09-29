@@ -7,7 +7,6 @@ public:
 	void make_effect(picture& e_image_) override {
 
 		for (int x = 0; x < e_image_.get_size_x(); x++) {
-
 			for (int y = 0; y < e_image_.get_size_y(); y++) {
 
 				std::array<int, 3> color;
