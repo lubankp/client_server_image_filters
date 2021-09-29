@@ -20,7 +20,7 @@ int main(){
     }
     catch (const std::exception& e)
     {
-        std::cout << "error: " << e.what() << std::endl;
+        std::cout << "error1: " << e.what() << std::endl;
     }
     std::string key;
     std::getline(std::cin, key);

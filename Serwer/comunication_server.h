@@ -78,26 +78,21 @@ public:
 			}
 			case 'R':
 			{
-				std::string horizontal = "";
-				std::string vertical = "";
+				std::string horizontal;
+				std::string vertical;
+				std::string horizontal_temp;
+				std::string vertical_temp;
+
 				std::size_t found1 = operation.find_first_of("-1234567890");
 				std::size_t found2 = operation.find(",");
  
 				if (found1 != std::string::npos and found2 != std::string::npos)
 				{
-					while (found1 <= found2)
-					{
-						horizontal += operation[found1];
-						found1 = operation.find_first_of("-1234567890", found1 + 1);
-					}
-					while (found2 != std::string::npos)
-					{
-						found2 = operation.find_first_of("-1234567890", found2 + 1);
-						if(found2 != std::string::npos){
-							vertical += operation[found2];
-						}
-					}
-
+					horizontal_temp = operation.substr(found1);
+					horizontal.assign(horizontal_temp.begin(), horizontal_temp.end() - found2);
+					vertical_temp = operation.substr(found2 + 1);
+					vertical.assign(vertical_temp.begin(), vertical_temp.end() - 1);
+					
 					horizontal_int = std::stoi(horizontal);
 					vertical_int = std::stoi(vertical);
 					std::cout << horizontal_int << std::endl;
@@ -128,24 +123,19 @@ public:
 			}
 			case 'C':
 			{
-				std::string canal = "";
-				std::string treshold = "";
+				std::string canal;
+				std::string treshold;
+				std::string canal_temp;
+				std::string treshold_temp;
+
 				std::size_t found3 = operation.find_first_of("rgb");
 				std::size_t found4 = operation.find(",");
 				if (found3 != std::string::npos and found4 != std::string::npos)
 				{
-					while (found3 != std::string::npos)
-					{
-						canal += operation[found3];
-						found3 = operation.find_first_of("rgb", found3 + 1);
-					}
-					while (found4 != std::string::npos)
-					{
-						found4 = operation.find_first_of("-1234567890", found4 + 1);
-						if (found4 != std::string::npos) {
-							treshold += operation[found4];
-						}
-					}
+					canal_temp = operation.substr(found3);
+					canal.assign(canal_temp.begin(), canal_temp.end() - found4);
+					treshold_temp = operation.substr(found4 + 1);
+					treshold.assign(treshold_temp.begin(), treshold_temp.end() - 1);
 
 					canal_ = (int)canal[0];
 					treshold_ = std::stoi(treshold);

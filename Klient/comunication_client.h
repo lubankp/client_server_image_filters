@@ -13,8 +13,6 @@
 template<class T>
 class comunication_client {
 
-	
-
 public:
 
 	byte* bytes;

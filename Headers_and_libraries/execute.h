@@ -10,7 +10,7 @@ public:
 
 	void execute_fun(std::vector<std::shared_ptr<effect>>& finish_vect, picture& picture) {
 	
-		for (auto element : finish_vect) {
+		for (const auto &element : finish_vect) {
 			element->make_effect(picture);
 		}
 	}
