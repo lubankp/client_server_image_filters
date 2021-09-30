@@ -33,12 +33,12 @@ public:
 		answer = params.get_string("image");
 		std::size_t size = params.get_integer("size");
 		auto pic = params.get_binary("picture", size);
-		auto hight = params.get_integer("sizeY");
+		auto height = params.get_integer("sizeY");
 		auto width = params.get_integer("sizeX");
 
 		comunication_.get_operation_vector()->clear();
 
-		auto mess = comunication_.open(pic, width, hight);
+		auto mess = comunication_.open(pic, width, height);
 
 		reply_param.set_string("image", mess);
 		reply_param.set_integer("step", comunication_.step_);
@@ -64,13 +64,13 @@ public:
 		reply_param.set_string("execute", "end");
 		reply_param.set_integer("step", 4);
 
-		int size = comunication_.picture_.total() * comunication_.picture_.elem_size();
+		int size = comunication_.picture_.get_size();
 		int width = comunication_.picture_.get_size_x();
-		int hight = comunication_.picture_.get_size_y();
+		int height = comunication_.picture_.get_size_y();
 		reply_param.set_integer("sizeX", width);
-		reply_param.set_integer("sizeY", hight);
+		reply_param.set_integer("sizeY", height);
 
-		auto byte = comunication_.get_picture().mat_to_bytes();
+		auto byte = comunication_.get_picture().mat_to_bytes(size);
 
 		reply_param.set_integer("size", size);
 		reply_param.set_binary("picture", byte, size);

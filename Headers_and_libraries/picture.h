@@ -64,9 +64,20 @@ public:
 
 	}
 
-	byte* mat_to_bytes()
-	{
-		int size = image_.total() * image_.elemSize();
+	size_t get_total() {
+		return image_.total();
+	}
+
+	size_t get_elem_size() {
+		return image_.elemSize();
+	}
+
+	int get_size() {
+		return get_total() * get_elem_size();
+	}
+
+	byte* mat_to_bytes(int size) {
+
 		byte* bytes = new byte[size];  // you will have to delete[] that later
 		std::memcpy(bytes, image_.data, size * sizeof(byte));
 		return bytes;
@@ -77,13 +88,5 @@ public:
 		image_ = cv::Mat(height, width, CV_8UC3, bytes).clone();
 	}
 
-	size_t total()
-	{
-		return image_.total();
-	}
 
-	size_t elem_size()
-	{
-		return image_.elemSize();
-	}
 };

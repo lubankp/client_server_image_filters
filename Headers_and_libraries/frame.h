@@ -8,16 +8,30 @@ class frame : public effect {
 
 public:
 
-	frame(int horizontal, int vertical) : horizontal_(horizontal), vertical_(vertical)
-	{
-	};
+	frame(int horizontal, int vertical) : horizontal_(horizontal), vertical_(vertical) {};
 
 	void make_effect(picture& e_image_) override {
-
-		int horizontal_s = (e_image_.get_size_x() - horizontal_) / 2;
-		int horizontal_f = e_image_.get_size_x() - horizontal_s;
-		int vertical_s = (e_image_.get_size_y() - vertical_) / 2;
-		int vertical_f = e_image_.get_size_y() - vertical_s;
+		int horizontal_s;
+		int horizontal_f;
+		int vertical_s;
+		int vertical_f;
+			
+		if(horizontal_ > e_image_.get_size_x()){
+			horizontal_s = e_image_.get_size_x();
+			horizontal_f = 0;
+		}
+		else {
+			horizontal_s = horizontal_;
+			horizontal_f = e_image_.get_size_x() - horizontal_;
+		}
+		if (vertical_ > e_image_.get_size_x()) {
+			vertical_s = e_image_.get_size_y();
+			vertical_f = 0;
+		}
+		else{
+			vertical_s = vertical_;
+			vertical_f = e_image_.get_size_y() - vertical_;
+		}
 
 
 		for (int x = 0; x < e_image_.get_size_x(); x++) {
@@ -35,7 +49,6 @@ public:
 				}
 			}
 		}
-
 	}
 	~frame() {};
 };

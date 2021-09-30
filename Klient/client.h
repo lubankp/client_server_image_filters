@@ -12,7 +12,7 @@ class client {
 	picture picture_;
 	std::size_t size_;
 	int width_;
-	int hight_;
+	int height_;
 	Message_state replied_;
 	Message_state rejected_;
 
@@ -62,7 +62,7 @@ public:
 			}
 			case 4: {
 
-				comunication_.to_image(byte_, width_, hight_, picture_);
+				comunication_.to_image(byte_, width_, height_, picture_, step);
 				picture_.show();
 
 				break;
@@ -75,6 +75,19 @@ public:
 		} while (true);
 	}
 
+	void get_picture_parameters(const Parameters& reply, int& step) {
+	
+		if (step == 4) {
+
+			height_ = reply.get_integer("sizeY");
+			width_ = reply.get_integer("sizeX");
+			size_ = reply.get_integer("size");
+			auto tmp = reply.get_binary("picture", size_);
+			byte_ = (void*)(new byte[size_]);
+			memcpy(byte_, tmp, size_);
+		}
+
+	}
 
 	void send_reply(std::string& message_name, Parameters& params, int& step) {
 
@@ -94,15 +107,7 @@ public:
 
 				std::cout << answer_data << '\n';
 
-				if (step == 4) {
-
-					hight_ = reply.get_integer("sizeY");
-					width_ = reply.get_integer("sizeX");
-					size_ = reply.get_integer("size");
-					auto tmp = reply.get_binary("picture", size_);
-					byte_ = (void*)(new byte[size_]);
-					memcpy(byte_, tmp, size_);
-				}
+				get_picture_parameters(reply, step);
 
 			}
 			else if (state == rejected_)
@@ -117,7 +122,7 @@ public:
 		}
 		catch (const std::exception& e)
 		{
-			std::cout << "Brak odpowiedzi" << std::endl;
+			std::cout << "Brak odpowiedzi, step: " << step << std::endl;
 		}
 
 	}

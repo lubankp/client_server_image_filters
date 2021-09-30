@@ -32,13 +32,13 @@ public:
 
 		picture.open_picture(image_name);
 
-		int size = picture.total() * picture.elem_size();
+		int size = picture.get_size();
 		auto width_ = picture.get_size_x();
-		auto hight_ = picture.get_size_y();
+		auto height_ = picture.get_size_y();
 		parameters.set_integer("sizeX", width_);
-		parameters.set_integer("sizeY", hight_);
+		parameters.set_integer("sizeY", height_);
 
-		bytes = picture.mat_to_bytes();
+		bytes = picture.mat_to_bytes(size);
 
 		parameters.set_integer("size", size);
 		parameters.set_binary("picture", bytes, size);
@@ -58,15 +58,15 @@ public:
 		parameters.set_string("execute", execute);
 	}
 
-	void to_image(void* pic, int width, int hight, picture& picture)
+	void to_image(void* pic, int width, int height, picture& picture, int& step)
 	{
 		try {
-			picture.bytes_to_mat((byte*)pic, width, hight);
+			picture.bytes_to_mat((byte*)pic, width, height);
 
 		}
 		catch (const my_exceptions& e)
 		{
-			std::cout << e.what() << std::endl;
+			throw;
 		}
 	}
 };

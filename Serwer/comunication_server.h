@@ -21,7 +21,6 @@ public:
 
 	picture picture_;
 	std::string image_name_;
-	execute execute_;
 	std::vector<std::map<std::string, int>> operation_vector_;
 	int step_ = 0;
 
@@ -41,11 +40,11 @@ public:
 	std::vector<std::map<std::string, int>>* get_operation_vector() { return &operation_vector_; }
 
 
-	std::string open(const void* pic, int width, int hight) {
+	std::string open(const void* pic, int width, int height) {
 
 		std::string message = " ";
 		try {
-			picture_.bytes_to_mat((byte*)pic, width, hight);
+			picture_.bytes_to_mat((byte*)pic, width, height);
 
 			message = "Wyberz operacje (I-inwersja, R(horyzontalna,wertykalna)-biala_ramka, C(kanal,treshold)-tresholding_kanalu, 0-koniec wprowadzania): \n";
 			step_ = 2;
@@ -92,14 +91,14 @@ public:
 					horizontal_int = std::stoi(horizontal);
 					vertical_int = std::stoi(vertical);
 
-					if ((horizontal_int > picture_.get_size_x()) or (horizontal_int < 0)) {
+					if (horizontal_int < 0) {
 
-						message = "Podaj wartosc liczbowa horyzontalna z zakresu (0 - " + std::to_string(picture_.get_size_x()) + " ):";
+						message = "Podaj wartosc liczbowa horyzontalna nieujemna: ";
 
 					}
-					else if ((vertical_int > picture_.get_size_y()) or (vertical_int < 0)) {
+					else if (vertical_int < 0) {
 
-						message = "Podaj wartosc liczbowa wertykalna z zakresu (0 - " + std::to_string(picture_.get_size_y()) + " ):";
+						message = "Podaj wartosc liczbowa wertykalna nieujemna: ";
 
 					}
 					else
