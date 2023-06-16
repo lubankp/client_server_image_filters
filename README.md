@@ -1,1 +1,1 @@
-# aplikacja_klient_serwer-
+# Client-server aplication which allow to add filters on images
